@@ -1,0 +1,512 @@
+number,hiragana,romaji,kanji,meaning,kanjiandhiragana
+1,ああ,aa,嗚呼,Ah!;Oh!;Alas!,嗚呼…ああ
+2,あい,ai,相,together;mutually;fellow,相…あい
+3,あい,ai,愛,love,愛…あい
+4,あいかわらず,aikawarazu,相変わらず,as ever;as usual;the same,相変わらず…あいかわらず
+5,あいさつ,aisatsu,挨拶,greeting;salutation,挨拶…あいさつ
+6,あいじょう,aijyou,愛情,love;affection,愛情…あいじょう
+7,あいする,aisuru,愛する,to love,愛する…あいする
+8,あいず,aizu,合図,sign;signal,合図…あいず
+9,あいそ,aiso,愛想,civility;courtesy;compliments;sociability;graces,愛想…あいそ
+10,あいたい,aitai,相対,confrontation;facing;between ourselves;no third party;tete-a-tete,相対…あいたい
+11,あいだ,aida,間,space;interval,間…あいだ
+12,あいだ,aida,間,space;interval,間…あいだ
+13,あいだ,aida,間,space;interval,間…あいだ
+14,あいだがら,aidagara,間柄,relation(ship),間柄…あいだがら
+15,あいて,aite,相手,companion;partner;company,相手…あいて
+16,あいにく,ainiku,愛憎,likes and dislikes,愛憎…あいにく
+17,あいま,aima,合間,interval,合間…あいま
+18,あいまい,aimai,曖昧,vague;ambiguous,曖昧…あいまい
+19,あう,au,合う,to fit;to suit;to agree with;to match;to be correct;to be profitable,合う…あう
+20,あう,au,会う,to meet;to interview,会う…あう
+21,あう,au,遭う,to meet;to encounter (undesirable nuance),遭う…あう
+22,あえて,aete,敢えて,dare (to do);challenge (to do),敢えて…あえて
+23,あお,ao,青,blue;green;green light,青…あお
+24,あおい,aoi,青い,blue;pale;green;unripe;inexperienced,青い…あおい
+25,あおぐ,aogu,仰ぐ,to look up (to);to respect;to depend on;to ask for;to seek;to revere;to drink;to take,仰ぐ…あおぐ
+26,あおじろい,aojiroi,青白い,pale;pallid,青白い…あおじろい
+27,あか,aka,垢,dirt;filth,垢…あか
+28,あか,aka,亜科,suborder;subfamily,亜科…あか
+29,あかい,akai,赤い,red,赤い…あかい
+30,あかがね,akagane,銅,copper,銅…あかがね
+31,あかし,akashi,証,proof;evidence,証…あかし
+32,あかじ,akaji,赤字,deficit;go in the red,赤字…あかじ
+33,あかす,akasu,明かす,to pass;spend;to reveal;to divulge,明かす…あかす
+34,あかちゃん,akachan,赤ちゃん,baby;infant,赤ちゃん…あかちゃん
+35,あからさま,akarasama,明白,obvious;overt;plainly;frankly,明白…あからさま
+36,あからむ,akaramu,赤らむ,to become red;to redden;to blush,赤らむ…あからむ
+37,あかり,akari,明かり,lamplight;light (in general);brightness,明かり…あかり
+38,あかるい,akarui,明るい,bright;cheerful,明るい…あかるい
+39,あかんぼう,akanbou,赤ん坊,baby,赤ん坊…あかんぼう
+40,あがり,agari,上がり,1.  slope;advance income;crop yield;ascent;rise;advance;death;spinning;completion;stop;finish;after (rain);ex (official  etc.); 2.  freshly-drawn green tea (esp. in sushi shops),上がり…あがり
+41,あがる,agaru,上がる,to enter;to go up;to rise;to climb up;to advance;to appreciate;to be promoted;to improve;to call on;to be offered;to accrue;to be finished;to come to (expenses);to go bankrupt;to begin spinning (cocoons);to be caught;to get ruffled;to eat;to drink;to die;,上がる…あがる
+42,あき,aki,秋,autumn;fall,秋…あき
+43,あき,aki,明き,room;time to spare;emptiness;vacant,明き…あき
+44,あき,aki,空き,room;time to spare;emptiness;vacant,空き…あき
+45,あきうど,akiudo,商人,trader;shopkeeper;merchant,商人…あきうど
+46,あきま,akima,空間,vacancy;room for rent or lease,空間…あきま
+47,あきらか,akiraka,明らか,obvious;evident;clear;plain,明らか…あきらか
+48,あきらめ,akirame,諦め,resignation;acceptance;consolation,諦め…あきらめ
+49,あきらめる,akirameru,諦める,to give up;to abandon,諦める…あきらめる
+50,あきる,akiru,飽きる,to get tired of;to lose interest in;to have enough,飽きる…あきる
+51,あきれる,akireru,呆れる,to be amazed;to be shocked,呆れる…あきれる
+52,あく,aku,悪,evil;wickedness,悪…あく
+53,あく,aku,開く,to be open,開く…あく
+54,あく,aku,空く,to become empty;to be less crowded,空く…あく
+55,あく,aku,空く,to become empty;to be less crowded,空く…あく
+56,あく,aku,灰,puckery juice,灰…あく
+57,あくしゅ,akushu,握手,handshake,握手…あくしゅ
+58,あくどい,akudoi,,1.  gaudy;showy;excessive; 2.  vicious,…あくどい
+59,あくび,akubi,悪日,unlucky day,悪日…あくび
+60,あくま,akuma,悪魔,devil;demon;fiend;Satan;evil spirit,悪魔…あくま
+61,あくまで,akumade,飽くまで,to the end;to the last;stubbornly;persistently,飽くまで…あくまで
+62,あくる,akuru,明くる,next;following,明くる…あくる
+63,あけがた,akegata,明け方,dawn,明け方…あけがた
+64,あける,akeru,開ける,to open,開ける…あける
+65,あける,akeru,明ける,to dawn;to become daylight,明ける…あける
+66,あげる,ageru,上げる,to give;to raise;to elevate;to fly (kites);to praise;to increase;to advance;to promote;to vomit;to usher in;to admit;to send (to school);to offer;to present;to leave with;to finish;to arrange (expenses);to observe;to perform;to quote;to mention;to bear (a,上げる…あげる
+67,あげる,ageru,挙げる,to raise;to fly;to give (an example),挙げる…あげる
+68,あこがれ,akogare,憧れ,yearning;longing;aspiration,憧れ…あこがれ
+69,あこがれる,akogareru,憧れる,to long for;to yearn after;to admire,憧れる…あこがれる
+70,あご,ago,顎,chin,顎…あご
+71,あさ,asa,麻,flax;linen;hemp,麻…あさ
+72,あさ,asa,朝,morning,朝…あさ
+73,あさい,asai,浅い,shallow;superficial,浅い…あさい
+74,あさって,asate,明後日,day after tomorrow,明後日…あさって
+75,あさって,asate,明後日,day after tomorrow,明後日…あさって
+76,あさねぼう,asanebou,朝寝坊,oversleeping;late riser,朝寝坊…あさねぼう
+77,あさましい,asamashii,浅ましい,wretched;miserable;shameful;mean;despicable;abject,浅ましい…あさましい
+78,あざ,aza,字,section of village,字…あざ
+79,あざ,aza,字,section of village,字…あざ
+80,あざむく,azamuku,欺く,to deceive,欺く…あざむく
+81,あざやか,azayaka,鮮やか,vivid;clear;brilliant,鮮やか…あざやか
+82,あざわらう,azawarau,あざ笑う,to sneer at;to ridicule,あざ笑う…あざわらう
+83,あし,ashi,足,foot;pace;gait;leg,足…あし
+84,あし,ashi,足,foot;pace;gait;leg,足…あし
+85,あしあと,ashiato,足跡,footprints,足跡…あしあと
+86,あしからず,ashikarazu,悪しからず,don't take me wrong  but...;I'm sorry,悪しからず…あしからず
+87,あした,ashita,明日,tomorrow,明日…あした
+88,あした,ashita,明日,tomorrow,明日…あした
+89,あしもと,ashimoto,足元,1.  at one's feet;underfoot; 2.  gait;pace;step,足元…あしもと
+90,あじ,aji,味,flavor;taste,味…あじ
+91,あじ,aji,味,flavor;taste,味…あじ
+92,あじわい,ajiwai,味わい,flavour;meaning;significance,味わい…あじわい
+93,あじわう,ajiwau,味わう,to taste;to savor;to relish,味わう…あじわう
+94,あずかる,azukaru,預かる,to keep in custody;to receive on deposit;to take charge of,預かる…あずかる
+95,あずける,azukeru,預ける,to give into custody;to leave (a child) in the care of;to entrust;to deposit,預ける…あずける
+96,あずま,azuma,東,east;Eastern Japan,東…あずま
+97,あせ,ase,汗,sweat;perspiration,汗…あせ
+98,あせる,aseru,焦る,to be in a hurry;to be impatient,焦る…あせる
+99,あせる,aseru,焦る,to be in a hurry;to be impatient,焦る…あせる
+100,あそこ,asoko,彼処,1.  (uk) there;over there;that place; 2.  (X) (col) genitals,彼処…あそこ
+101,あそび,asobi,遊び,playing,遊び…あそび
+102,あたい,atai,値,value;price;cost;worth;merit,値…あたい
+103,あたい,atai,値,value;price;cost;worth;merit,値…あたい
+104,あたいする,ataisuru,値する,to be worth;to deserve;to merit,値する…あたいする
+105,あたえる,ataeru,与える,to give;to present;to award,与える…あたえる
+106,あたし,atashi,私,I (fem),私…あたし
+107,あたたかい,atatakai,暖かい,warm;mild;genial,暖かい…あたたかい
+108,あたたまる,atatamaru,暖まる,to warm oneself;to sun oneself;to warm up;to get warm,暖まる…あたたまる
+109,あたためる,atatameru,暖める,to warm;to heat,暖める…あたためる
+110,あたま,atama,頭,head,頭…あたま
+111,あたま,atama,頭,head,頭…あたま
+112,あたま,atama,頭,head,頭…あたま
+113,あたらしい,atarashii,新しい,new,新しい…あたらしい
+114,あたり,atari,当たり,hit;success;reaching the mark;per ...;vicinity;neighborhood,当たり…あたり
+115,あたり,atari,辺り,(in the) neighbourhood;vicinity;nearby,辺り…あたり
+116,あたりまえ,atarimae,当たり前,usual;common;ordinary;natural;reasonable;obvious,当たり前…あたりまえ
+117,あたる,ataru,当たる,to be hit;to be successful;to face (confront);to lie (in the direction of);to undertake;to treat;to be equivalent to;to apply to;to be applicable;to be assigned,当たる…あたる
+118,あだびと,adabito,他人,another person;unrelated person;outsider;stranger,他人…あだびと
+119,あちこち,achikochi,彼方此方,here and there,彼方此方…あちこち
+120,あちら,achira,彼方,1.  there;yonder;that,彼方…あちら
+121,あちらこちら,achirakochira,彼方此方,here and there,彼方此方…あちらこちら
+122,あっか,aka,悪化,deterioration;growing worse;aggravation;degeneration;corruption,悪化…あっか
+123,あっけない,akkenai,呆気ない,not enough;too quick (short  long  etc.),呆気ない…あっけない
+124,あっこう,akkou,悪口,abuse;insult;slander;evil speaking,悪口…あっこう
+125,あっさり,assari,,easily;readily;quickly,…あっさり
+126,あっしゅく,ashuku,圧縮,compression;condensation;pressure,圧縮…あっしゅく
+127,あっち,achi,,over there,…あっち
+128,あっぱく,appaku,圧迫,pressure;coercion;oppression,圧迫…あっぱく
+129,あつい,atsui,厚い,cordial;kind;warm(hearted);thick;deep,厚い…あつい
+130,あつい,atsui,暑い,hot;warm,暑い…あつい
+131,あつい,atsui,熱い,hot (thing),熱い…あつい
+132,あつかい,atsukai,扱い,treatment;service,扱い…あつかい
+133,あつかう,atsukau,扱う,to handle;to deal with;to treat,扱う…あつかう
+134,あつかましい,atsukamashii,厚かましい,impudent;shameless;brazen,厚かましい…あつかましい
+135,あつまり,atsumari,集まり,gathering;meeting;assembly;collection,集まり…あつまり
+136,あつまる,atsumaru,集まる,to gather;to collect;to assemble,集まる…あつまる
+137,あつめる,atsumeru,集める,to collect;to assemble,集める…あつめる
+138,あつらえる,atsuraeru,誂える,to give an order;to place an order,誂える…あつらえる
+139,あつりょく,atsuryoku,圧力,stress;pressure,圧力…あつりょく
+140,あて,ate,当て,object;aim;end;hopes;expectations,当て…あて
+141,あて,ate,宛,addressed to,宛…あて
+142,あてじ,ateji,当て字,phonetic-equivalent character;substitute character,当て字…あてじ
+143,あてな,atena,宛名,address;direction,宛名…あてな
+144,あてはまる,atehamaru,当てはまる,to apply (a rule),当てはまる…あてはまる
+145,あてはめる,atehameru,当てはめる,to apply;to adapt,当てはめる…あてはめる
+146,あてる,ateru,宛てる,to address,宛てる…あてる
+147,あてる,ateru,当てる,to hit;to apply a patch,当てる…あてる
+149,あと,ato,跡,trace;tracks;mark;scar;sign;remains;ruins,跡…あと
+148,あと,ato,後,after;behind;later;rear;remainder;successor,後…あと
+154,あとつぎ,atotsugi,跡継ぎ,heir;successor,跡継ぎ…あとつぎ
+155,あとまわし,atomawashi,後回し,putting off;postponing,後回し…あとまわし
+156,あな,ana,穴,hole,穴…あな
+157,あなた,anata,貴女,you;lady,貴女…あなた
+158,あに,ani,兄,older brother,兄…あに
+159,あね,ane,姉,older sister,姉…あね
+160,あの,ano,彼の,that over there,彼の…あの
+161,あばれる,abareru,暴れる,to act violently;to rage;to struggle;to be riotous,暴れる…あばれる
+162,あびる,abiru,浴びる,to bathe;to bask in the sun;to shower,浴びる…あびる
+163,あふれる,afureru,溢れる,to flood;to overflow;to brim over,溢れる…あふれる
+164,あぶない,abunai,危ない,dangerous;critical;grave;uncertain;unreliable;limping;narrow;close;watch out!,危ない…あぶない
+165,あぶら,abura,油,oil,油…あぶら
+166,あぶら,abura,油,oil,油…あぶら
+167,あぶらえ,aburae,油絵,oil painting,油絵…あぶらえ
+168,あぶる,aburu,炙る,to scorch,炙る…あぶる
+169,あべこべ,abekobe,,contrary;opposite;inverse,…あべこべ
+170,あまい,amai,甘い,generous;indulgent;easy-going;sweet;fond of;soft on;overly optimistic;naive,甘い…あまい
+171,あまえる,amaeru,甘える,to behave like a spoiled child;to fawn on,甘える…あまえる
+172,あまくち,amakuchi,甘口,sweet flavour;mildness;flattery;stupidity,甘口…あまくち
+173,あまぐ,amagu,雨具,rain gear,雨具…あまぐ
+174,あまつ,amatsu,天,heavenly;imperial,天…あまつ
+175,あまど,amado,雨戸,sliding storm door,雨戸…あまど
+176,あまやかす,amayakasu,甘やかす,to pamper;to spoil,甘やかす…あまやかす
+177,あまり,amari,余り,not very (this form only used as adverb);not much;remainder;rest;remnant;surplus;balance;excess;remains;scraps;residue;fullness;other;too much,余り…あまり
+178,あまり,amari,余り,not very (this form only used as adverb);not much;remainder;rest;remnant;surplus;balance;excess;remains;scraps;residue;fullness;other;too much,余り…あまり
+179,あまる,amaru,余る,to remain;to be left over;to be in excess;to be too many,余る…あまる
+180,あみ,ami,網,net;network,網…あみ
+181,あみ,ami,網,net;network,網…あみ
+182,あみもの,amimono,編物,knitting;web,編物…あみもの
+183,あむ,amu,編む,to knit,編む…あむ
+184,あめ,ame,雨,rain,雨…あめ
+185,あめ,ame,飴,(hard) candy,飴…あめ
+186,あめつち,ametsuchi,天地,heaven and earth;the universe;nature;top and bottom;realm;sphere;world,天地…あめつち
+187,あやうい,ayaui,危うい,dangerous;critical;grave;uncertain;unreliable;limping;narrow;close;watch out!,危うい…あやうい
+188,あやしい,ayashii,怪しい,suspicious;dubious;doubtful,怪しい…あやしい
+189,あやつる,ayatsuru,操る,to manipulate;to operate;to pull strings,操る…あやつる
+190,あやふや,ayafuya,,uncertain;vague;ambiguous,…あやふや
+191,あやぶむ,ayabumu,危ぶむ,to fear;to have misgivings;to be doubtful;to mistrust,危ぶむ…あやぶむ
+192,あやまち,ayamachi,過ち,fault;error;indiscretion,過ち…あやまち
+193,あやまり,ayamari,誤り,error,誤り…あやまり
+194,あやまる,ayamaru,誤る,to make a mistake,誤る…あやまる
+195,あやまる,ayamaru,謝る,to apologize,謝る…あやまる
+196,あゆみ,ayumi,歩み,walking,歩み…あゆみ
+197,あゆむ,ayumu,歩む,to walk;to go on foot,歩む…あゆむ
+198,あら,ara,,oh;ah;saw-edged perch (Niphon spinosus),…あら
+199,あらい,arai,荒い,rough;rude;wild,荒い…あらい
+200,あらい,arai,粗い,coarse;rough,粗い…あらい
+201,あらう,arau,洗う,to wash,洗う…あらう
+202,あらかじめ,arakajime,予め,beforehand;in advance;previously,予め…あらかじめ
+203,あらし,arashi,嵐,storm;tempest,嵐…あらし
+204,あらす,arasu,荒らす,to lay waste;to devastate;to damage;to invade;to break into,荒らす…あらす
+205,あらすじ,arasuji,粗筋,outline;summary,粗筋…あらすじ
+206,あらそい,arasoi,争い,dispute;strife;quarrel;dissension;conflict;rivalry;contest,争い…あらそい
+207,あらそう,arasou,争う,to dispute;to argue;to be at variance;to compete,争う…あらそう
+208,あらた,arata,新た,new;fresh;novel,新た…あらた
+209,あらたまる,aratamaru,改まる,to be renewed,改まる…あらたまる
+210,あらためて,aratamete,改めて,another time;again;over again;anew;formally,改めて…あらためて
+211,あらためる,aratameru,改める,to change;to alter;to reform;to revise,改める…あらためる
+212,あらっぽい,arappoi,荒っぽい,rough;rude,荒っぽい…あらっぽい
+213,あらゆる,arayuru,凡ゆる,all;every,凡ゆる…あらゆる
+214,あられ,arare,,kind of cookie;cartoon character,…あられ
+215,あらわす,arawasu,表す,to express;to show;to reveal,表す…あらわす
+216,あらわす,arawasu,現す,to show;to indicate;to display,現す…あらわす
+217,あらわす,arawasu,著す,to write;to publish,著す…あらわす
+218,あらわれ,araware,現われ,embodiment;materialization,現われ…あらわれ
+219,あらわれる,arawareru,現われる,to appear;to come in sight;to become visible;to come out;to embody;to materialize;to express oneself,現われる…あらわれる
+220,ありがたい,arigatai,有難い,grateful;thankful,有難い…ありがたい
+221,ありがとう,arigatou,有難う,Thank you,有難う…ありがとう
+222,ありさま,arisama,有様,state;condition;circumstances;the way things are or should be;truth,有様…ありさま
+223,ありのまま,arinomama,有りのまま,the truth;fact;as it is;frankly,有りのまま…ありのまま
+224,ある,aru,或る,a certain...;some...,或る…ある
+225,ある,aru,有る,to be;to have,有る…ある
+226,ある,aru,在る,to live;to be,在る…ある
+227,あるいは,aruiha,或いは,or;possibly,或いは…あるいは
+228,あるく,aruku,歩く,to walk,歩く…あるく
+229,あるじ,aruji,主,master;head (of a household);landlord;one's husband;employer;host,主…あるじ
+230,あるじ,aruji,主,master;head (of a household);landlord;one's husband;employer;host,主…あるじ
+231,あるじ,aruji,主人,master;head (of a household);landlord;one's husband;employer;host,主人…あるじ
+232,あれ,are,,1.  that;that thing; 2.  (X) (col) genitals; 3.  menses,…あれ
+233,あれこれ,arekore,彼此,one thing or another;this and that;this or that,彼此…あれこれ
+234,あれる,areru,荒れる,to be stormy;to be rough;to lose one's temper,荒れる…あれる
+235,あわ,awa,泡,bubble;foam;froth;head on beer,泡…あわ
+236,あわす,awasu,合わす,to join together;to face;to unite;to be opposite;to combine;to connect;to add up;to mix;to match;to overlap;to compare;to check with,合わす…あわす
+237,あわせ,awase,合わせ,joint together;opposite;facing,合わせ…あわせ
+238,あわせる,awaseru,合わせる,to join together;to be opposite;to face;to unite;to combine;to connect;to add up;to mix;to match;to overlap;to compare;to check with,合わせる…あわせる
+239,あわただしい,awatadashii,慌ただしい,busy;hurried;confused;flurried,慌ただしい…あわただしい
+240,あわてる,awateru,慌てる,to become confused (disconcerted  disorganized),慌てる…あわてる
+241,あわれ,aware,哀れ,helpless;pathos;pity;sorrow;grief;misery;compassion,哀れ…あわれ
+242,あん,an,案,plan;suffix meaning draft,案…あん
+243,あんい,ani,安易,easy-going,安易…あんい
+244,あんがい,angai,案外,unexpectedly,案外…あんがい
+245,あんき,anki,暗記,memorization;learning by heart,暗記…あんき
+246,あんさつ,ansatsu,暗殺,assassination,暗殺…あんさつ
+247,あんざん,anzan,暗算,mental arithmetic,暗算…あんざん
+248,あんしん,anshin,安心,relief;peace of mind,安心…あんしん
+249,あんじ,anji,暗示,hint;suggestion,暗示…あんじ
+250,あんじる,anjiru,案じる,to be anxious;to ponder,案じる…あんじる
+251,あんせい,ansei,安静,rest,安静…あんせい
+252,あんぜん,anzen,安全,safety;security,安全…あんぜん
+253,あんてい,antei,安定,stability;equilibrium,安定…あんてい
+254,あんな,anna,,such;so;that;sort of,…あんな
+255,あんない,annai,案内,information;guidance;leading,案内…あんない
+256,あんのじょう,annojyou,案の定,sure enough;as usual,案の定…あんのじょう
+257,あんまり,anmari,余り,not very (this form only used as adverb);not much;remainder;rest;remnant;surplus;balance;excess;remains;scraps;residue;fullness;other;too much,余り…あんまり
+258,い,i,依,depending on,依…い
+259,い,i,依,depending on,依…い
+260,い,i,胃,stomach,胃…い
+261,いい,ii,良い,good,良い…いい
+262,いい,ii,伊井,that one;Italy,伊井…いい
+263,いいえ,iie,否,no;nay;yes;well,否…いいえ
+264,いいえ,iie,否,no;nay;yes;well,否…いいえ
+265,いいかげん,iikagen,いい加減,moderate;right;random;not thorough;vague;irresponsible;halfhearted,いい加減…いいかげん
+266,いいだす,iidasu,言い出す,to start talking;to speak;to tell;to propose;to suggest;to break the ice,言い出す…いいだす
+267,いいつける,iitsukeru,言い付ける,to tell;to tell on (someone);to order;to charge;to direct,言い付ける…いいつける
+268,いいわけ,iiwake,言い訳,excuse;explanation,言い訳…いいわけ
+269,いいん,iin,医院,doctor's office (surgery);clinic;dispensary,医院…いいん
+270,いいん,iin,委員,committee member,委員…いいん
+271,いう,iu,言う,to say,言う…いう
+272,いえ,ie,家,house,家…いえ
+273,いえ,ie,家,house,家…いえ
+274,いえ,ie,家,house,家…いえ
+275,いえ,ie,家,house,家…いえ
+276,いえで,iede,家出,running away from home;leaving home,家出…いえで
+277,いえぬし,ienushi,家主,landlord,家主…いえぬし
+278,いか,ika,以下,less than;up to;below;under;and downward;not exceeding;the following;the rest,以下…いか
+279,いかが,ikaga,如何,how;in what way,如何…いかが
+280,いかす,ikasu,生かす,to revive;to resuscitate;to make use of,生かす…いかす
+281,いかずち,ikazuchi,雷,thunder,雷…いかずち
+282,いかに,ikani,如何に,how?;in what way?;how much?;however;whatever,如何に…いかに
+283,いかにも,ikanimo,如何にも,indeed;really;phrase meaning agreement,如何にも…いかにも
+284,いかり,ikari,怒り,anger;hatred,怒り…いかり
+285,いかる,ikaru,怒る,to get angry;to be angry,怒る…いかる
+286,いがい,igai,以外,with the exception of;excepting,以外…いがい
+287,いがい,igai,意外,unexpected;surprising,意外…いがい
+288,いがく,igaku,医学,medical science;medicine,医学…いがく
+289,いがむ,igamu,歪む,to warp;to swerve;to deflect;to be crooked;to be distorted;to be bent;to incline;to slant;to be perverted;to be gross-grained;to get bent;to be strained,歪む…いがむ
+290,いがむ,igamu,歪む,to warp;to swerve;to deflect;to be crooked;to be distorted;to be bent;to incline;to slant;to be perverted;to be gross-grained;to get bent;to be strained,歪む…いがむ
+291,いき,iki,粋,chic;style;purity;essence,粋…いき
+292,いき,iki,粋,chic;style;purity;essence,粋…いき
+293,いき,iki,息,breath;tone,息…いき
+294,いき,iki,行き,going,行き…いき
+295,いきいき,ikiiki,生き生き,vividly;lively,生き生き…いきいき
+296,いきおい,ikioi,勢い,force;vigor;energy;spirit;life;authority;influence;power;might;impetus;course (of events);tendency;necessarily,勢い…いきおい
+297,いきがい,ikigai,域外,outside the area,域外…いきがい
+298,いきごむ,ikigomu,意気込む,to be enthusiastic about,意気込む…いきごむ
+299,いきさつ,ikisatsu,経緯,1.  details;whole story;sequence of events;particulars;how it started;how things got this way; 2.  complications;position,経緯…いきさつ
+300,いきちがい,ikichigai,行き違い,misunderstanding;estrangement;disagreement;crossing without meeting;going astray,行き違い…いきちがい
+301,いきなり,ikinari,行き成り,suddenly,行き成り…いきなり
+302,いきもの,ikimono,生き物,living thing;animal,生き物…いきもの
+303,いきる,ikiru,生きる,to live;to exist,生きる…いきる
+304,いぎ,igi,異議,objection;dissent;protest,異議…いぎ
+305,いぎ,igi,意義,meaning;significance,意義…いぎ
+306,いく,iku,,to come;to orgasm,…いく
+307,いく,iku,行く,to go,行く…いく
+308,いくさ,ikusa,軍,war;battle;campaign;fight,軍…いくさ
+309,いくさ,ikusa,戦,war;battle;campaign;fight,戦…いくさ
+310,いくじ,ikuji,育児,childcare;nursing;upbringing,育児…いくじ
+311,いくせい,ikusei,育成,rearing;training;nurture;cultivation;promotion,育成…いくせい
+312,いくた,ikuta,幾多,many;numerous,幾多…いくた
+313,いくつ,ikutsu,幾つ,how many?;how old?,幾つ…いくつ
+314,いくぶん,ikubun,幾分,somewhat,幾分…いくぶん
+315,いくら,ikura,幾ら,how much?;how many?,幾ら…いくら
+316,いけ,ike,池,pond,池…いけ
+317,いけない,ikenai,,must not do;bad;wrong;not good,…いけない
+318,いけばな,ikebana,生け花,1.  flower arrangement,生け花…いけばな
+319,いける,ikeru,活ける,to arrange (flowers),活ける…いける
+320,いけん,iken,異見,different opinion;objection,異見…いけん
+321,いけん,iken,意見,opinion;view,意見…いけん
+322,いこう,ikou,意向,intention;idea;inclination,意向…いこう
+323,いこう,ikou,移行,switching over to,移行…いこう
+324,いこう,ikou,以降,on and after;hereafter;thereafter,以降…いこう
+325,いご,igo,以後,after this;from now on;hereafter;thereafter,以後…いご
+326,いさましい,isamashii,勇ましい,brave;valiant;gallant;courageous,勇ましい…いさましい
+327,いざ,iza,,now;come (now);well;crucial moment,…いざ
+328,いし,ishi,石,stone,石…いし
+329,いし,ishi,医師,doctor;physician,医師…いし
+330,いし,ishi,意思,intention;purpose,意思…いし
+331,いし,ishi,意志,will;volition,意志…いし
+332,いしき,ishiki,意識,consciousness;senses,意識…いしき
+333,いしぶみ,ishibumi,碑,stone monument bearing an inscription,碑…いしぶみ
+334,いしゃ,isha,医者,doctor (medical),医者…いしゃ
+335,いしょう,ishou,衣装,clothing;costume;outfit;garment;dress,衣装…いしょう
+336,いしょくじゅう,ishokujyuu,衣食住,necessities of life (food  clothing  etc.),衣食住…いしょくじゅう
+337,いじ,iji,意地,disposition;spirit;willpower;obstinacy;backbone;appetite,意地…いじ
+338,いじ,iji,維持,maintenance;preservation,維持…いじ
+339,いじめる,ijimeru,苛める,to tease;to torment;to persecute;to chastise,苛める…いじめる
+340,いじゅう,ijyuu,移住,migration;immigration,移住…いじゅう
+341,いじょう,ijyou,以上,more than;exceeding;greater than;this is all;over;above;and up;beyond;the above-mentioned;since;as long as;the end,以上…いじょう
+342,いじょう,ijyou,異常,strangeness;abnormality;disorder,異常…いじょう
+343,いじる,ijiru,弄る,to touch;to tamper with,弄る…いじる
+344,いじわる,ijiwaru,意地悪,malicious;ill-tempered;unkind,意地悪…いじわる
+345,いす,isu,椅子,chair,椅子…いす
+346,いずみ,izumi,泉,spring;fountain,泉…いずみ
+347,いずれ,izure,何れ,where;which;who;anyway;anyhow;at any rate,何れ…いずれ
+348,いせい,isei,異性,the opposite sex,異性…いせい
+349,いせき,iseki,遺跡,historic ruins (remains  relics),遺跡…いせき
+350,いぜん,izen,依然,still;as yet,依然…いぜん
+351,いぜん,izen,以前,ago;since;before;previous,以前…いぜん
+352,いそがしい,isogashii,忙しい,busy;irritated,忙しい…いそがしい
+353,いそぐ,isogu,急ぐ,to hurry;to rush,急ぐ…いそぐ
+354,いそん,ison,依存,dependence;dependent;reliance,依存…いそん
+355,いた,ita,板,board;plank,板…いた
+356,いたい,itai,痛い,painful,痛い…いたい
+357,いたく,itaku,委託,consign (goods (for sale) to a firm);entrust (person with something);commit,委託…いたく
+358,いたす,itasu,致す,to do,致す…いたす
+359,いたずら,itazura,悪戯,tease;prank;trick;practical joke;mischief,悪戯…いたずら
+360,いただき,itadaki,頂,(top of) head;summit;spire,頂…いただき
+361,いただきます,itadakimasu,戴きます,expression of gratitude before meals,戴きます…いただきます
+362,いただく,itadaku,頂く,to receive;to take food or drink (hum);to be crowned with;to wear;to live under (a ruler);to install (a president);to accept;to buy;to take,頂く…いただく
+363,いたって,itate,至って,very much;exceedingly;extremely,至って…いたって
+364,いたみ,itami,痛み,pain;ache;sore;grief;distress,痛み…いたみ
+365,いたむ,itamu,痛む,to hurt;to feel a pain;to be injured,痛む…いたむ
+366,いためる,itameru,痛める,to hurt;to injure;to cause pain;to worry;to bother;to afflict;to be grieved over,痛める…いためる
+367,いためる,itameru,炒める,to stir-fry,炒める…いためる
+368,いたる,itaru,至る,to come;to arrive,至る…いたる
+369,いたわる,itawaru,労る,to pity;to sympathize with;to console;to care for;to be kind to,労る…いたわる
+370,いだい,idai,偉大,greatness,偉大…いだい
+371,いだく,idaku,抱く,to embrace;to hug;to harbour;to entertain;`to sleep with',抱く…いだく
+372,いだく,idaku,抱く,to embrace;to hug;to harbour;to entertain;`to sleep with',抱く…いだく
+373,いち,ichi,市,market;fair,市…いち
+374,いち,ichi,一,(num) one,一…いち
+375,いち,ichi,位地,place;situation;position;location,位地…いち
+376,いち,ichi,位置,place;situation;position;location,位置…いち
+377,いち,ichi,市,market;fair,市…いち
+378,いち,ichi,一,(num) one,一…いち
+379,いちいち,ichiichi,一々,one by one;separately,一々…いちいち
+380,いちおう,ichiou,一応,once;tentatively;in outline;for the time being,一応…いちおう
+381,いちがいに,ichigaini,一概に,unconditionally;as a rule,一概に…いちがいに
+382,いちげん,ichigen,一見,unfamiliar;never before met,一見…いちげん
+383,いちげん,ichigen,一言,single word,一言…いちげん
+384,いちじ,ichiji,一時,one hour;short time;once;a time;temporarily;at one time;twelfth part of a day,一時…いちじ
+385,いちじつ,ichijitsu,一日,1.  one day; 2.  first of month,一日…いちじつ
+386,いちじょう,ichijyou,一定,fixed;settled;definite;uniform;regularized;defined;standardized;certain;prescribed,一定…いちじょう
+387,いちじるしい,ichijirushii,著しい,remarkable;considerable,著しい…いちじるしい
+388,いちだんと,ichidanto,一段と,greater;more;further;still more,一段と…いちだんと
+389,いちど,ichido,一度,once;one time;on one occasion,一度…いちど
+390,いちどう,ichidou,一同,all present;all concerned;all of us,一同…いちどう
+391,いちどに,ichidoni,一度に,all at once,一度に…いちどに
+392,いちにん,ichinin,一人,one person,一人…いちにん
+393,いちば,ichiba,市場,(town) market;marketplace;market,市場…いちば
+394,いちば,ichiba,市場,(town) market;marketplace;market,市場…いちば
+395,いちばん,ichiban,一番,best;first;number one;a game;a round;a bout;a fall;an event (in a meet),一番…いちばん
+396,いちぶ,ichibu,一部,1.  one copy  e.g. of a document; 2.  a part;partly;some,一部…いちぶ
+397,いちぶぶん,ichibubun,一部分,a part,一部分…いちぶぶん
+398,いちべつ,ichibetsu,一別,parting,一別…いちべつ
+399,いちめん,ichimen,一面,one side;one phase;front page;the other hand;the whole surface,一面…いちめん
+400,いちもく,ichimoku,一目,a glance;a look;a glimpse,一目…いちもく
+401,いちよう,ichiyou,一様,uniformity;evenness;similarity;equality;impartiality,一様…いちよう
+402,いちりつ,ichiritsu,一律,evenness;uniformity;monotony;equality,一律…いちりつ
+403,いちりゅう,ichiryuu,一流,first class;top grade;school (of art);foremost;top-notch;unique,一流…いちりゅう
+404,いちれん,ichiren,一連,a series;a chain;a ream (of paper),一連…いちれん
+405,いっか,ika,一家,a house;a home;a family;a household;one's family;one's folks;a style,一家…いっか
+406,いっかつ,ikkatsu,一括,all together;batch;one lump;one bundle;summing up,一括…いっかつ
+407,いっき,iki,一気,drink!(said repeatedly as a party cheer),一気…いっき
+408,いっきょに,ikyoni,一挙に,at a stroke;with a single swoop,一挙に…いっきょに
+409,いっさい,issai,一切,all;everything;without exception;the whole;entirely;absolutely,一切…いっさい
+410,いっさくじつ,issakujitsu,一昨日,day before yesterday,一昨日…いっさくじつ
+411,いっさくねん,issakunen,一昨年,year before last,一昨年…いっさくねん
+412,いっしゅ,ishu,一種,a species;a kind;a variety,一種…いっしゅ
+413,いっしゅん,ishun,一瞬,a moment;an instant,一瞬…いっしゅん
+414,いっしょ,isho,一緒,together;meeting;company,一緒…いっしょ
+415,いっしょう,ishou,一生,whole life;a lifetime;all through life;one existence;a generation;an age;the whole world;the era,一生…いっしょう
+416,いっしょうけんめい,ishouukenmei,一生懸命,very hard;with utmost effort;with all one's might,一生懸命…いっしょうけんめい
+417,いっしん,isshin,一心,one mind;wholeheartedness;the whole heart,一心…いっしん
+418,いっせい,issei,一斉,simultaneous;all at once,一斉…いっせい
+419,いっそ,iso,,rather;sooner;might as well,…いっそ
+420,いっそう,issou,一層,much more;still more;all the more,一層…いっそう
+421,いったい,ittai,一帯,a region;a zone;the whole place,一帯…いったい
+422,いったい,ittai,一体,one object;one body;what on earth?;really?;generally,一体…いったい
+423,いったん,ittan,一旦,once;for a moment;one morning;temporarily,一旦…いったん
+424,いっち,ichi,一致,coincidence;agreement;union;match;conformity;consistency;co-operation,一致…いっち
+425,いっぱい,ippai,一敗,one defeat,一敗…いっぱい
+426,いっぱん,ippan,一般,general;liberal;universal;ordinary;average,一般…いっぱん
+427,いっぺん,ippen,一変,complete change;about-face,一変…いっぺん
+428,いっぽう,ippou,一方,on the other hand;one side;one way;a quarter;one direction;one party;the other party;meanwhile;only;simple;in turn,一方…いっぽう
+429,いつ,itsu,何時,when;how soon,何時…いつ
+430,いつか,itsuka,五日,five days;the fifth day (of the month),五日…いつか
+431,いつか,itsuka,何時か,sometime;someday;one day;some time or other;the other day;in due course;in time,何時か…いつか
+432,いつつ,itsutsu,五つ,five,五つ…いつつ
+433,いつでも,itsudemo,何時でも,(at) any time;always;at all times;never (neg);whenever,何時でも…いつでも
+434,いつのまにか,itsunomanika,何時の間にか,before one knows;unnoticed;unawares,何時の間にか…いつのまにか
+435,いつまでも,itsumademo,何時までも,forever;for good;eternally;as long as one likes;indefinitely,何時までも…いつまでも
+436,いつも,itsumo,何時も,always;usually;every time;never (with neg. verb),何時も…いつも
+437,いてん,iten,移転,moving;transfer;demise,移転…いてん
+438,いと,ito,意図,intention;aim;design,意図…いと
+439,いと,ito,糸,thread;yarn;string,糸…いと
+440,いとこ,itoko,従兄弟,cousin,従兄弟…いとこ
+441,いとこ,itoko,従姉妹,cousin (female),従姉妹…いとこ
+442,いとなむ,itonamu,営む,to carry on (e.g. in ceremony);to run a business,営む…いとなむ
+443,いとま,itoma,暇,free time;leisure;leave;spare time;farewell,暇…いとま
+444,いど,ido,井戸,water well,井戸…いど
+445,いど,ido,緯度,latitude (nav.),緯度…いど
+446,いどう,idou,異動,a change,異動…いどう
+447,いどう,idou,移動,removal;migration;movement,移動…いどう
+448,いどむ,idomu,挑む,to challenge;to contend for;to make love to,挑む…いどむ
+449,いない,inai,以内,within;inside of;less than,以内…いない
+450,いなか,inaka,田舎,rural;not particularly urban;countryside;suburb,田舎…いなか
+451,いなびかり,inabikari,稲光,(flash of) lightning,稲光…いなびかり
+452,いにしえ,inishie,古,antiquity;ancient times,古…いにしえ
+453,いぬ,inu,犬,dog,犬…いぬ
+454,いね,ine,稲,rice-plant,稲…いね
+455,いねむり,inemuri,居眠り,dozing;nodding off,居眠り…いねむり
+456,いのち,inochi,命,(mortal) life,命…いのち
+457,いのり,inori,祈り,prayer;supplication,祈り…いのり
+458,いのる,inoru,祈る,to pray;to wish,祈る…いのる
+459,いはん,ihan,違反,violation (of law);transgression;infringement;breach,違反…いはん
+460,いばる,ibaru,威張る,to be proud;to swagger,威張る…いばる
+461,いびき,ibiki,鼾,snoring,鼾…いびき
+462,いふく,ifuku,衣服,clothes,衣服…いふく
+463,いま,ima,今,now;the present time;just now;soon;immediately;(one) more,今…いま
+464,いま,ima,居間,living room (western style),居間…いま
+465,いま,ima,今,now;the present time;just now;soon;immediately;(one) more,今…いま
+466,いまさら,imasara,今更,now;at this late hour,今更…いまさら
+467,いまだ,imada,未だ,as yet;hitherto;not yet (neg),未だ…いまだ
+468,いまに,imani,今に,before long;even now,今に…いまに
+469,いまにも,imanimo,今にも,at any time;soon,今にも…いまにも
+470,いみ,imi,意味,meaning;significance,意味…いみ
+471,いみん,imin,移民,emigration;immigration;emigrant;immigrant,移民…いみん
+472,いもうと,imouto,妹,younger sister,妹…いもうと
+473,いや,iya,嫌,disagreeable;detestable;unpleasant;reluctant,嫌…いや
+474,いやいや,iyaiya,厭々,unwillingly;grudgingly;shaking head in refusal (to children),厭々…いやいや
+475,いやがる,iyagaru,嫌がる,to hate;to dislike,嫌がる…いやがる
+476,いやしい,iyashii,卑しい,greedy;vulgar;shabby;humble;base;mean;vile,卑しい…いやしい
+477,いやに,iyani,,awfully;terribly,…いやに
+478,いやらしい,iyarashii,厭やらしい,detestable;disagreeable,厭やらしい…いやらしい
+479,いよいよ,iyoiyo,愈々,more and more;all the more;increasingly;at last;beyond doubt,愈々…いよいよ
+480,いよく,iyoku,意欲,will;desire;ambition,意欲…いよく
+481,いらい,irai,以来,since;henceforth,以来…いらい
+482,いらい,irai,依頼,request;commission;dispatch;dependence;trust,依頼…いらい
+483,いらいら,iraira,苛々,getting nervous;irritation,苛々…いらいら
+484,いらっしゃる,irasharu,,to be;to come;to go,…いらっしゃる
+485,いりくち,irikuchi,入口,entrance;gate;approach;mouth,入口…いりくち
+486,いりょう,iryou,衣料,clothing,衣料…いりょう
+487,いりょう,iryou,医療,medical care;medical treatment,医療…いりょう
+488,いりょく,iryoku,威力,power;might;authority;influence,威力…いりょく
+489,いる,iru,居る,to be (animate);to exist,居る…いる
+490,いる,iru,要る,to need,要る…いる
+491,いる,iru,居る,to be (animate);to exist,居る…いる
+492,いる,iru,入る,to get in;to go in;to come in;to flow into;to set;to set in,入る…いる
+493,いる,iru,煎る,to parch;to fry;to fire;to broil;to roast;to boil down (in oil),煎る…いる
+494,いる,iru,居る,to be (animate);to exist,居る…いる
+495,いるい,irui,衣類,clothes;clothing;garments,衣類…いるい
+496,いれもの,iremono,入れ物,container;case;receptacle,入れ物…いれもの
+497,いれる,ireru,入れる,to put in;to take in;to bring in;to let in;to admit;to introduce;to commit (to prison);to usher in;to insert;to set (jewels);to employ;to listen to;to tolerate;to comprehend;to include;to pay (interest);to cast (votes),入れる…いれる
+498,いろ,iro,色,colour,色…いろ
+499,いろ,iro,色,colour,色…いろ
+500,いろいろ,iroiro,色々,various,色々…いろいろ
+501,いろん,iron,異論,different opinion;objection,異論…いろん
+502,いわ,iwa,岩,rock;crag,岩…いわ
+503,いわい,iwai,祝い,celebration;festival,祝い…いわい
+504,いわう,iwau,祝う,to congratulate;to celebrate,祝う…いわう
+505,いわば,iwaba,言わば,so to speak,言わば…いわば
+506,いわゆる,iwayuru,所謂,the so-called;so to speak,所謂…いわゆる
+507,いん,in,印,seal;stamp;mark;print,印…いん
+508,いん,in,員,member,員…いん
+509,いんかん,inkan,印鑑,stamp;seal,印鑑…いんかん
+510,いんき,inki,陰気,gloom;melancholy,陰気…いんき
+511,いんきょ,inkyo,隠居,retirement;retired person,隠居…いんきょ
+512,いんさつ,insatsu,印刷,printing,印刷…いんさつ
+513,いんしょう,inshou,印象,impression,印象…いんしょう
+514,いんたい,intai,引退,retire,引退…いんたい
+515,いんよう,inyou,引用,quotation;citation,引用…いんよう
