@@ -141,207 +141,195 @@ function drawNetwork(data,vocab){
     // https://d3-graph-gallery.com/graph/network_basic.html - graph
     // https://observablehq.com/@john-guerra/force-directed-graph-with-link-highlighting - highlighting selected subgraph
     // https://bl.ocks.org/heybignick/3faf257bbbbc7743bb72310d03b86ee8 - text
-    // https://observablehq.com/@borowski-9ld/d3-force-directed-graph - zoom
+    // https://observablehq.com/@severo/drag-zoom-canvas - zoom
 
     // https://observablehq.com/@grantcuster/using-three-js-for-2d-data-visualization - maybe zoom + lables
 
-    var svg_width = 1000;
-    var svg_height = 800;
+    var svg_width = 1400;
+    var svg_height = 700;
 
     var node_repulsion = -100;
     var circle_radius = 10;
 
     var transform = d3.zoomIdentity;
 
+    var color_node = "#59b3a2";
+    var color_link = "#aaa";
+
+
+    let mouse_x = 0
+    let mouse_y = 0
+
+
+    var active_node = -1 // id of the active node
+    var active_node_element // active node
+    var active_node_old = -2 // id of the active node
+    var connected_nodes = [] // array with connected nodes
+
     // set the dimensions and margins of the graph
-    var margin = {top: 10, right: 30, bottom: 30, left: 40},
+    var margin = {top: 0, right: 0, bottom: 0, left: 0},
       width = svg_width - margin.left - margin.right,
       height = svg_height - margin.top - margin.bottom;
     
     // append the svg object to the body of the page
-    var svg = d3.select("#network")/*/
-    .append("svg")
-      .attr("id","svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)/*/
+    var svg = d3.select("#network")
     .append("canvas")
         .attr("id","canvas")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)/**/
-    .append("g")
-      .attr("id", "container")
-      .attr("transform",
-            "translate(" + margin.left + "," + margin.top + ")");
+        .attr("height", height + margin.top + margin.bottom);
     
-
-/**/
     var canvas = document.getElementById("canvas");
-
     console.log("canvas")
     console.log(canvas)
-
     var ctx = canvas.getContext('2d');
-/**/
 
 
-      // Initialize the links
-      var link = svg
-        .selectAll("line")
-        .data(data.links)
-        .enter()
-        .append("line")
-        .style("stroke", "#aaa")
+    var link = svg
+      .data(data.links)
+      .enter()
+    
+    var node = svg
+      .data(data.nodes)
+      .enter()
+
+
+
+    // Let's list the force we wanna apply on the network
+    var simulation = d3.forceSimulation(data.nodes)                 // Force algorithm is applied to data.nodes
+        .force("link", d3.forceLink()                               // This force provides links between nodes
+              .id(function(d) { return d.id; })                     // This provides the id of a node
+              //.attr("color",color_node)
+              .links(data.links)                                    // and this the list of links
+        )
+        .force("charge", d3.forceManyBody().strength(node_repulsion))         // This adds repulsion between nodes. Play with the -400 for the repulsion strength
+        .force("center", d3.forceCenter(svg_width / 2, svg_height / 2))     // This force attracts nodes to the center of the svg area
+        .on("tick", render);
+
+
     
 
+    function getMousePos(canvas, e){
+        var rect = canvas.getBoundingClientRect()
+        return {x: e.clientX - rect.left, y: e.clientY - rect.top}
+    }
+
+    d3.select(ctx.canvas).call(d3
+        .zoom()
+        .scaleExtent([0.05, 2])
+        .on("zoom", () => render()));
 
 
-      // Initialize the nodes
-      var node = svg
-        .selectAll("circle")
-        .data(data.nodes)
-        .enter()
-        .append("circle")
-        .attr("id", "circle")
-        .attr("r", circle_radius)
-        .style("fill", "#69b3a2")
-        .on("mouseenter", (evt, d) => {
-            link
-              .attr("display", "none")
-              .filter(l => l.source.id === d.id || l.target.id === d.id)
-              .attr("display", "block");
+      
+    ctx.canvas.onmousemove = function(e){
+        var pos = getMousePos(this, e)
+        mouse_x = pos.x
+        mouse_y = pos.y
+    }
 
 
+    function render(){
 
-              context.beginPath();    
-    
-                // start at point x=5 y=10      
-                context.moveTo( d.x, d.y );     
-                // create line from point x=5 y=10 to x=45 y=50     
-                context.lineTo( l.x, l.y );     
-                // draw path to canvas      
-                context.stroke(); 
-              ctx.fillStyle = 'red';
-              ctx.fill();
+        transform = d3.zoomTransform(canvas);
+
+        ctx.save();
+        ctx.clearRect(0, 0, svg_width, svg_height);
+        ctx.translate(transform.x, transform.y);
+        ctx.scale(transform.k, transform.k);
+        
+        if (active_node_old != active_node){
+            connected_nodes = []
+        }
+
+        link.each(function(d) {
+            var number = drawLine(d.source.x, d.source.y, d.target.x, d.target.y, color_link,d.source.id, d.target.id);
+            
+            if (1 == number){
+                connected_nodes.push(d.source)
+            }else if (0 == number){
+                connected_nodes.push(d.target)
+            }
+        });
+        
+        for (let i = 0; i < connected_nodes.length; ++i){
+            drawLine(active_node_element.x, active_node_element.y, connected_nodes[i].x, connected_nodes[i].y, "black", -1, -1);
+        }
+
+        active_node_old = active_node
+
+        var mx = (((mouse_x) - transform.x) / transform.k);
+        var my = (((mouse_y) - transform.y) / transform.k);
+        //console.log("xm: " + mx + " ym: " + my) // mouse position in point space
 
 
-        })
-        .on("mouseleave", evt => {
-            link.attr("display", "block");
+        node.each(function(d){
 
+            findactive(d.x,d.y,mx,my, d.id)
 
-            context.beginPath();    
-    
-            // start at point x=5 y=10      
-            context.moveTo( 5, 10 );     
-            // create line from point x=5 y=10 to x=45 y=50     
-            context.lineTo( 45, 50 );     
-            // draw path to canvas      
-            context.stroke(); 
-          ctx.fillStyle = 'red';
-          ctx.fill();
+            drawPoint(d.x, d.y, color_node, d)
 
-
-
-
-
+            if (d.id == active_node){
+                active_node_element = d;
+            }
 
         });
-
-
-        var lables = node.append("text")
-        .text(function(d) {
-          return vocab[d.id].kanji;
-        })
-        .attr('x', 6)
-        .attr('y', 3);
-  
-        node.append("title")
-        .text(function(d) { return vocab[d.id].kanji; });
-
-
-
-
-
-        const zoomRect = svg
-        .append("rect")
-        .attr("width", width * 2)
-        .attr("height", height * 2)
-        .style("fill", "none")
-        .style("pointer-events", "all");
-    
-      const zoom = d3
-        .zoom()
-        .scaleExtent([0.1, 128])
-        .on("zoom", zoomed);
-    
-      //ZOOM
-      zoomRect.call(zoom).call(zoom.translateTo, svg_width / 2, svg_height / 2);
-    
-      //ZOOM
-      
-
-      function zoomed() {
-        //d3.event.transform
-        transform = d3.event.transform;
-        node.attr("transform", d3.event.transform);
-        link.attr("transform", d3.event.transform);
-        lables.attr("transform", d3.event.transform);
-
-        console.log("transform")
-        console.log(d3.event.transform)
         
-      node
-      .attr("cx", function (d) { return d.x; })
-      .attr("cy", function(d) {
-     /**/
-         ctx.beginPath();
-         ctx.arc(d.x * d3.event.transform.k + d3.event.transform.x
-             , d.y * d3.event.transform.k + d3.event.transform.y
-             , circle_radius, 0, Math.PI*2, false);
-         ctx.fillStyle = 'red';
-         ctx.fill();
-/**/
-         return d.y; });
-      }
+        ctx.restore();
+    }
 
 
 
 
+    function drawLine(x1, y1, x2, y2,color, id0, id1){
+        
 
-      // Let's list the force we wanna apply on the network
-      var simulation = d3.forceSimulation(data.nodes)                 // Force algorithm is applied to data.nodes
-          .force("link", d3.forceLink()                               // This force provides links between nodes
-                .id(function(d) { return d.id; })                     // This provides the id of a node
-                .links(data.links)                                    // and this the list of links
-          )
-          .force("charge", d3.forceManyBody().strength(node_repulsion))         // This adds repulsion between nodes. Play with the -400 for the repulsion strength
-          .force("center", d3.forceCenter(width / 2, height / 2))     // This force attracts nodes to the center of the svg area
-          .on("end", ticked);
-    
-      // This function is run at each iteration of the force algorithm, updating the nodes position.
-      function ticked() {
-        link
-            .attr("x1", function(d) { return d.source.x; })
-            .attr("y1", function(d) { return d.source.y; })
-            .attr("x2", function(d) { return d.target.x; })
-            .attr("y2", function(d) { return d.target.y; });
-    
-        node
-             .attr("cx", function (d) { return d.x; })
-             .attr("cy", function(d) {
-                ctx.beginPath();
-                ctx.arc(d.x * transform.k + transform.x
-                    , d.y * transform.k + transform.y
-                    , circle_radius, 0, Math.PI*2, false);
-                ctx.fillStyle = 'red';
-                ctx.fill();
-                return d.y; });
-      }
-    
+        if (id0 == active_node || id1 == active_node){
+            
+            if (active_node != active_node_old){
+                if (id0 == active_node){
+                    return 0
+                }else{
+                    return 1
+                }
+            }
+            return;
+        }
+        
 
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.moveTo(x1, y1);    
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+    }
 
+    function drawPoint(x,y,color, d){
 
+        
 
+        ctx.beginPath();/*/
+        ctx.arc(x, y, circle_radius, 0, Math.PI*2, false);
+        /*/        
+        ctx.rect(x - circle_radius,y - circle_radius,2*circle_radius,2*circle_radius);
+        /**/
+
+        if (connected_nodes.includes(d)){
+            color = "orange"
+        }else if (active_node == d.id){
+            color = "red"
+        }
+
+        ctx.fillStyle = color;
+        ctx.fill();
+    }
+
+    function findactive(x,y,mx,my, id){
+
+        var dist = Math.sqrt( (x - mx) * (x - mx) + (y - my) * (y - my) )
+
+        if (dist <= circle_radius){
+            active_node = id
+        }
+    }
 
 }
 
