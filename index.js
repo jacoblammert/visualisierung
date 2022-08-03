@@ -120,17 +120,6 @@ function findpairs(kanji,vocab){
       var data = new Object();
       data.nodes = list_nodes;
       data.links = list_links;
-      //console.log("data");
-      //console.log(data)
-
-
-      //console.log(linked_vocabs)
-      //console.log("longest_chain:")
-      //console.log(longest_chain)
-      //console.log("data")
-      //console.log(data)
-      //console.log( "done")
-
       
     drawNetwork(data,vocab);
 }
@@ -145,8 +134,8 @@ function drawNetwork(data,vocab){
 
     // https://observablehq.com/@grantcuster/using-three-js-for-2d-data-visualization - maybe zoom + lables
 
-    var svg_width = 1400;
-    var svg_height = 700;
+    var svg_width = 1500;
+    var svg_height = 1000;
 
     var node_repulsion = -100;
     var circle_radius = 10;
@@ -179,8 +168,6 @@ function drawNetwork(data,vocab){
         .attr("height", height + margin.top + margin.bottom);
     
     var canvas = document.getElementById("canvas");
-    console.log("canvas")
-    console.log(canvas)
     var ctx = canvas.getContext('2d');
 
 
@@ -213,20 +200,35 @@ function drawNetwork(data,vocab){
         return {x: e.clientX - rect.left, y: e.clientY - rect.top}
     }
 
+    ctx.canvas.addEventListener('mousedown', function(e){
+
+        if (e.button == 0){
+            var pos = getMousePos(this, e)
+            mouse_x = pos.x
+            mouse_y = pos.y
+            
+            var mx = (((mouse_x) - transform.x) / transform.k);
+            var my = (((mouse_y) - transform.y) / transform.k);
+
+            node.each(function(d){
+
+                findactive(d.x,d.y,mx,my, d.id)
+    
+                if (d.id == active_node){
+                    active_node_element = d;
+                }
+            });
+            render()
+        }
+    })
+
+
     d3.select(ctx.canvas).call(d3
         .zoom()
         .scaleExtent([0.05, 2])
         .on("zoom", () => render()));
 
-
-      
-    ctx.canvas.onmousemove = function(e){
-        var pos = getMousePos(this, e)
-        mouse_x = pos.x
-        mouse_y = pos.y
-    }
-
-
+        
     function render(){
 
         transform = d3.zoomTransform(canvas);
@@ -262,14 +264,8 @@ function drawNetwork(data,vocab){
 
 
         node.each(function(d){
-
-            findactive(d.x,d.y,mx,my, d.id)
-
             drawPoint(d.x, d.y, color_node, d)
-
-            if (d.id == active_node){
-                active_node_element = d;
-            }
+            
 
         });
         
@@ -304,9 +300,7 @@ function drawNetwork(data,vocab){
 
     function drawPoint(x,y,color, d){
 
-        
-
-        ctx.beginPath();/*/
+        ctx.beginPath();/**/
         ctx.arc(x, y, circle_radius, 0, Math.PI*2, false);
         /*/        
         ctx.rect(x - circle_radius,y - circle_radius,2*circle_radius,2*circle_radius);
@@ -330,7 +324,6 @@ function drawNetwork(data,vocab){
             active_node = id
         }
     }
-
 }
 
 
