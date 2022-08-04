@@ -1,5 +1,4 @@
 import * as d3 from "d3";
-import { text } from "d3";
 import * as Papa from "papaparse"
 
 // cmd to this folder then:
@@ -151,17 +150,21 @@ function drawNetwork(data,vocab){
     var color_node = "#59b3a2";
     
     var color_link = "#aaa";
-    var line_width_black = circle_radius * 0.4
-    var line_width_grey = circle_radius * 0.25
+    var line_width = circle_radius * 0.25
+    var color_link_connected = "black";
+    var line_width_connected = circle_radius * 0.4
     
     var color_text_background = "grey";
     var color_text = "black";
     var color_active = "red";
     var color_connected = "orange";
 
-    let mouse_x = 0
+    let mouse_x = 0 // mouse in canvas space
     let mouse_y = 0
+    var mx = 0      // mouse in graph space
+    var my = 0
 
+    var view_mode_old = 0;
     var view_mode = 0;
 
     var active_node_id = -1 // id of the active node
@@ -210,7 +213,6 @@ function drawNetwork(data,vocab){
     var simulation = d3.forceSimulation(data.nodes)                 // Force algorithm is applied to data.nodes
         .force("link", d3.forceLink()                               // This force provides links between nodes
               .id(function(d) { return d.id; })                     // This provides the id of a node
-              //.attr("color",color_node)
               .links(data.links)                                    // and this the list of links
         )
         .force("charge", d3.forceManyBody().strength(node_repulsion))         // This adds repulsion between nodes. Play with the -400 for the repulsion strength
@@ -225,14 +227,21 @@ function drawNetwork(data,vocab){
         return {x: e.clientX - rect.left, y: e.clientY - rect.top}
     }
 
-    ctx.canvas.addEventListener('mousedown', function(e){
+
+
+    
+    
+    ctx.canvas.addEventListener('mousemove', function(e){
 
         var pos = getMousePos(this, e)
         mouse_x = pos.x
         mouse_y = pos.y
         
-        var mx = (((mouse_x) - transform.x) / transform.k);
-        var my = (((mouse_y) - transform.y) / transform.k);
+        mx = (((mouse_x) - transform.x) / transform.k);
+        my = (((mouse_y) - transform.y) / transform.k);
+    })
+    
+    ctx.canvas.addEventListener('mousedown', function(e){
 
         if ( transform.k < 0.3){
             return
@@ -244,16 +253,12 @@ function drawNetwork(data,vocab){
 
             var selected_element = false;
 
-            if (view_mode == 2){
-                // Select text element?
-
-            }
             if (!selected_element){
                 // no text element was selected
                 // has a new node been selected?
                 node.each(function(d){
 
-                    findActive(d,mx,my)
+                    findActive(d)
                 
                     if (d.id == active_node_id){
                         connected_nodes.push(d)
@@ -267,13 +272,13 @@ function drawNetwork(data,vocab){
 
             }
             render()
-        }else{
+        }else if (e.button == 1 || e.button == 2){
             
             // Take over a connected node or select a new one
 
             node.each(function(d){
 
-                findNewActive(d,mx,my)
+                findNewActive(d)
             
                 if (d.id == active_node_id){
                     if (!connected_nodes.includes(d)){
@@ -287,8 +292,7 @@ function drawNetwork(data,vocab){
                 if (!active_connected_nodes.includes(active_node_element)){
                     active_connected_nodes.push(active_node_element)
                 }else {
-                    active_connected_nodes.splice(active_connected_nodes.indexOf(active_node_element),1) // remove the element
-                    active_connected_nodes.push(active_node_element)                                     // put it back in front
+                    dToFrontActive(active_node_element)
                 }
             }
             render()
@@ -339,7 +343,7 @@ function drawNetwork(data,vocab){
 
         link.each(function(d) {
             // draws all grey lines
-            var number = drawLine(d.source.x, d.source.y, d.target.x, d.target.y, color_link,d.source.id, d.target.id, line_width_grey);
+            var number = drawLine(d.source.x, d.source.y, d.target.x, d.target.y, color_link,d.source.id, d.target.id, line_width);
             
             if (1 == number){
                 connected_nodes.push(d.source)
@@ -350,7 +354,7 @@ function drawNetwork(data,vocab){
         // Black lines
         for (let i = 0; i < connected_nodes.length && null != active_node_element; ++i){
             // draws all black lines connected to the selected object
-            drawLine(active_node_element.x, active_node_element.y, connected_nodes[i].x, connected_nodes[i].y, "black", -1, -1, line_width_black);
+            drawLine(active_node_element.x, active_node_element.y, connected_nodes[i].x, connected_nodes[i].y, color_link_connected, -1, -1, line_width_connected);
         }
 
         active_node_id_old = active_node_id
@@ -363,7 +367,8 @@ function drawNetwork(data,vocab){
         node.each(function(d){
             //console.log(d.connections)
             if (drawPointHere(d.x,d.y, circle_radius)){
-                drawPoint(d.x, d.y, color_node, circle_radius)
+                var color_range = color_in_range(d)
+                drawPoint(d.x, d.y, color_range, circle_radius)
             }
 
         });
@@ -441,8 +446,19 @@ function drawNetwork(data,vocab){
                 drawText(connected_nodes[i].x,connected_nodes[i].y,connected_nodes[i], color, false)
         
             }/**/
-            // Draw text seperatly in the correct order
 
+            // change order of text drawing if an object has been selected
+
+            for (let i = active_connected_nodes.length-1; 0 <= i; --i){
+                var rect = calculateTextRect(active_connected_nodes[i].x,active_connected_nodes[i].y,active_connected_nodes[i])
+                if (mouseInRect(rect[0],rect[1],rect[2], rect[3])){
+                    dToFrontActive(active_connected_nodes[i])
+                    i = -1
+                }
+            }
+
+
+            // Draw text seperatly in the correct order
             for (let i = 0; i < active_connected_nodes.length; ++i){
 
                 if (connected_nodes.includes(active_connected_nodes[i])){
@@ -476,7 +492,7 @@ function drawNetwork(data,vocab){
         
     }
 
-    function findActive(d,mx,my){
+    function findActive(d){
         // checks if a not yet connected node has been selected 
         if (Math.sqrt(Math.pow(d.x - mx,2)+ Math.pow(d.y - my,2)) <= circle_radius){
             
@@ -499,10 +515,8 @@ function drawNetwork(data,vocab){
         }
     }
 
-    function findNewActive(d,mx,my){
-
+    function findNewActive(d){
         if (Math.sqrt(Math.pow(d.x - mx,2)+ Math.pow(d.y - my,2)) <= circle_radius){
-            
             active_node_id = d.id
         }
     }
@@ -515,24 +529,21 @@ function drawNetwork(data,vocab){
         var text = vocab[d.id].kanji 
         var text_width = (text.length + 0.5) * circle_radius;
 
+        var draw_text = active && view_mode == 2
+
 
         // Red background text
-        if (active && view_mode == 2){
+        if (draw_text){
 
-            text_width = 0
+            var rect = calculateTextRect(x,y,d)
 
-            for (let i = 0; i < vocab[d.id].meaning.length; ++i){
-                text_width = Math.max(text_width, vocab[d.id].meaning[i].length)
+
+            if (!mouseInRect(rect[0],rect[1],rect[2], rect[3])){
+                ctx.globalAlpha = 0.5 + 0.5 * (active_connected_nodes.indexOf(d) + 1) / active_connected_nodes.length;
             }
-
-
-            var margin_left = circle_radius * 0.2
-
-            var height = circle_radius * 2 * (vocab[d.id].meaning.length + 2)
-            var width = Math.max(circle_radius * 7, text_width * circle_radius * 0.5) + margin_left
-
             ctx.fillStyle = color;
-            ctx.fillRect(x - margin_left, y - circle_radius, width, height);
+            ctx.fillRect(rect[0],rect[1],rect[2] - rect[0], rect[3] - rect[1]);
+            ctx.globalAlpha = 1;
         }
 
 
@@ -545,7 +556,7 @@ function drawNetwork(data,vocab){
         ctx.fillText(text,x,y)
 
         // hiragana + meaning
-        if (active && view_mode == 2){
+        if (draw_text){
             
             text = vocab[d.id].hiragana 
             ctx.fillText(text,x,y + 2 * circle_radius)
@@ -554,10 +565,14 @@ function drawNetwork(data,vocab){
                 ctx.fillText(text,x,y + 2 * circle_radius * (2 + i))
             }
         }
-
     }
 
 
+
+
+    function mouseInRect(x_min, y_min, x_max, y_max){
+        return x_min < mx && mx < x_max && y_min < my && my < y_max
+    }
 
     function drawPointHere(x,y,radius){ // Point
         return ( min_x - radius * 5 < x && x < max_x + radius * 5 &&
@@ -584,6 +599,48 @@ function drawNetwork(data,vocab){
         /**/
     }
 
+    function dToFrontActive(d){
+        if (active_connected_nodes.indexOf(d) == active_connected_nodes.length-1){
+            return
+        }
+        active_connected_nodes.splice(active_connected_nodes.indexOf(d),1) // remove the element
+        active_connected_nodes.push(d)                                     // put it back in front
+    }
+
+
+    function calculateTextRect(x,y,d){
+
+        var text_width = (vocab[d.id].kanji.length + 0.5) * circle_radius;
+
+        for (let i = 0; i < vocab[d.id].meaning.length; ++i){
+            text_width = Math.max(text_width, vocab[d.id].meaning[i].length)
+        }
+
+
+        var margin_left = circle_radius * 0.2
+
+        var height = circle_radius * 2 * (vocab[d.id].meaning.length + 2)
+        var width = Math.max(circle_radius * 7, text_width * circle_radius * 0.5) + margin_left
+
+        var rect_x = x - margin_left
+        var rect_y = y - circle_radius
+
+
+        return [rect_x, rect_y, rect_x + width, rect_y + height]
+    }
+
+
+    function color_in_range(d){
+
+        var n = Math.pow(vocab[d.id].connections/max_connections,0.2)
+        n = vocab[d.id].connections/max_connections
+
+        var r = (255 * Math.sqrt(n))
+        var g = (255 * (1 - n/2))
+        var b = 0
+
+        return "rgb(" + r + "," + g + "," + b + ")";
+    }
 
 }
 
