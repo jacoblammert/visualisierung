@@ -159,10 +159,13 @@ function drawNetwork(data,vocab){
     var color_active = "red";
     var color_connected = "orange";
 
-    let mouse_x = 0 // mouse in canvas space
-    let mouse_y = 0
-    var mx = 0      // mouse in graph space
-    var my = 0
+    var clicked_element = false // if a circle has been clicked or not
+
+    let mouse = Object()
+    mouse.cx = 0 // mouse x in canvas space
+    mouse.cy = 0 // mouse y in canvas space
+    mouse.gx = 0 // mouse x in graph space
+    mouse.gy = 0 // mouse y in graph space
 
     var view_mode_old = 0;
     var view_mode = 0;
@@ -172,10 +175,38 @@ function drawNetwork(data,vocab){
     var active_node_id_old = -2 // id of the active node
     var connected_nodes = [] // array with connected nodes
 
-    var min_x = 0
-    var min_y = 0
-    var max_x = 0
-    var max_y = 0
+    var screen = Object()
+
+    screen.min_x = 0
+    screen.min_y = 0
+    screen.max_x = 0
+    screen.max_y = 0
+
+    var point0 = Object()
+    point0.x = 0
+    point0.y = 0
+
+    var point1 = Object()
+    point1.x = 0
+    point1.y = 0
+
+    var animation = Object()
+    animation.point0 = point0
+    animation.point1 = point1
+    animation.progress = -1
+
+
+    
+    function test() {
+        if (0 <= animation.progress && animation.progress < 1){
+            updateAnimation()
+            render()
+        }
+      }
+      var interval = setInterval(test, 10);
+
+
+
 
     var active_connected_nodes = [] // array with connected nodes which are also active
 
@@ -234,11 +265,16 @@ function drawNetwork(data,vocab){
     ctx.canvas.addEventListener('mousemove', function(e){
 
         var pos = getMousePos(this, e)
-        mouse_x = pos.x
-        mouse_y = pos.y
+        mouse.cx = pos.x
+        mouse.cy = pos.y
         
-        mx = (((mouse_x) - transform.x) / transform.k);
-        my = (((mouse_y) - transform.y) / transform.k);
+        mouse.gx = ((mouse.cx - transform.x) / transform.k);
+        mouse.gy = ((mouse.cy - transform.y) / transform.k);
+
+        //console.log("transform")
+        //console.log(transform)
+        //console.log("mouse")
+        //console.log(mouse)
     })
     
     ctx.canvas.addEventListener('mousedown', function(e){
@@ -247,11 +283,14 @@ function drawNetwork(data,vocab){
             return
         }
 
+        clicked_element = false;
+
         if (e.button == 0){
 
             // check if on a position in the text
 
-            var selected_element = false;
+
+            var selected_element = false; // TODO add text selection
 
             if (!selected_element){
                 // no text element was selected
@@ -269,9 +308,11 @@ function drawNetwork(data,vocab){
                     active_connected_nodes = []
                     active_connected_nodes.push(active_node_element)
                 }/**/
-
             }
             render()
+            if (!clicked_element){
+                select_Line();
+            }
         }else if (e.button == 1 || e.button == 2){
             
             // Take over a connected node or select a new one
@@ -328,11 +369,11 @@ function drawNetwork(data,vocab){
 
 
 
-        min_x = ((0 - transform.x) / transform.k);
-        min_y = ((0 - transform.y) / transform.k);
+        screen.min_x = ((0 - transform.x) / transform.k); // screen min x in point space
+        screen.min_y = ((0 - transform.y) / transform.k); // screen min y in point space
 
-        max_x = ((svg_width - transform.x) / transform.k);
-        max_y = ((svg_height - transform.y) / transform.k);
+        screen.max_x = ((svg_width - transform.x) / transform.k);  // screen max x in point space
+        screen.max_y = ((svg_height - transform.y) / transform.k); // screen max y in point space
 
 
 
@@ -494,8 +535,12 @@ function drawNetwork(data,vocab){
 
     function findActive(d){
         // checks if a not yet connected node has been selected 
-        if (Math.sqrt(Math.pow(d.x - mx,2)+ Math.pow(d.y - my,2)) <= circle_radius){
+        
+
+        if (distace_point_point(d.x ,d.y, mouse.gx, mouse.gy) <= circle_radius){
             
+            clicked_element = true;
+
             if (connected_nodes.includes(d) && !active_connected_nodes.includes(d) /*&& active_node_element != d*/){
                 // New element added to selection
                 active_connected_nodes.push(d)
@@ -516,7 +561,8 @@ function drawNetwork(data,vocab){
     }
 
     function findNewActive(d){
-        if (Math.sqrt(Math.pow(d.x - mx,2)+ Math.pow(d.y - my,2)) <= circle_radius){
+        if (distace_point_point(d.x, d.y, mouse.gx, mouse.gy) <= circle_radius){
+            clicked_element = true;
             active_node_id = d.id
         }
     }
@@ -569,30 +615,33 @@ function drawNetwork(data,vocab){
 
 
 
-
     function mouseInRect(x_min, y_min, x_max, y_max){
-        return x_min < mx && mx < x_max && y_min < my && my < y_max
+        var m = x_min < mouse.gx && mouse.gx < x_max && y_min < mouse.gy && mouse.gy < y_max
+        if (m){ 
+            clicked_element = true;
+        }
+        return m
     }
 
     function drawPointHere(x,y,radius){ // Point
-        return ( min_x - radius * 5 < x && x < max_x + radius * 5 &&
-            min_y - radius * 5 < y && y < max_y + radius * 5)
+        return (screen.min_x - radius * 5 < x && x < screen.max_x + radius * 5 &&
+                screen.min_y - radius * 5 < y && y < screen.max_y + radius * 5)
     }
 
     function drawLineHere(x0,y0,x1,y1){ // Line
 
-        if (x0 < min_x && x1 < min_x ||
-            y0 < min_y && y1 < min_y ||
-            x0 > max_x && x1 > max_x ||
-            y0 > max_y && y1 > max_y){
+        if (x0 < screen.min_x && x1 < screen.min_x ||
+            y0 < screen.min_y && y1 < screen.min_y ||
+            x0 > screen.max_x && x1 > screen.max_x ||
+            y0 > screen.max_y && y1 > screen.max_y){
             return false;
         }
         return true
 /*/
-        if (min_x < x0 && x0 < max_x &&
-            min_y < y0 && y0 < max_y ||
-            min_x < x1 && x1 < max_x &&
-            min_y < y1 && y1 < max_y){
+        if (screen.min_x < x0 && x0 < screen.max_x &&
+            screen.min_y < y0 && y0 < screen.max_y ||
+            screen.min_x < x1 && x1 < screen.max_x &&
+            screen.min_y < y1 && y1 < screen.max_y){
             return true
         }
         return true
@@ -641,6 +690,92 @@ function drawNetwork(data,vocab){
 
         return "rgb(" + r + "," + g + "," + b + ")";
     }
+
+
+
+    function distace_point_point(x,y,x0,y0){
+        return Math.sqrt(Math.pow(x-x0,2) + Math.pow(y-y0,2))
+    }
+
+
+    function distance_point_line(px, py, x0, y0, x1, y1){
+        return Math.abs((x0-x1)*(y1-py) - (x1-px)*(y0-y1)) / Math.sqrt(Math.pow(x0-x1,2) + Math.pow(y0-y1,2))
+    }
+
+
+    function select_Line(){
+        // if a black line has been selected, the camera moves to the point which is furthest and adds it to the active nodes
+
+        var min_dist = 999999999999999999999;
+
+        for (let i = 0; i < connected_nodes.length && null != active_node_element; ++i){
+            if (connected_nodes[i] != active_node_element){
+                var dist = distance_point_line(mouse.gx, mouse.gy, active_node_element.x, active_node_element.y, connected_nodes[i].x, connected_nodes[i].y)
+
+                var inside_rect = pointInRect(mouse.gx, mouse.gy, active_node_element.x, active_node_element.y, connected_nodes[i].x, connected_nodes[i].y)
+
+                if (dist < line_width_connected * 0.5 && dist < min_dist && inside_rect){
+
+                    var dist_connected = distace_point_point(mouse.gx, mouse.gy, connected_nodes[i].x, connected_nodes[i].y)
+                    var dist_active = distace_point_point(mouse.gx, mouse.gy, active_node_element.x, active_node_element.y)
+
+                    animation.progress = 0 // new Animation starts 
+
+                    animation.point0.x = -transform.x / transform.k
+                    animation.point0.y = -transform.y / transform.k
+
+                    //var connected_= distace_point_point(active_node_element.x , active_node_element.y,animation.point0.x,animation.point0.y);
+
+                    if (dist_connected > dist_active){
+                        // move to the connected node
+                        animation.point1.x = connected_nodes[i].x - (screen.max_x - screen.min_x) * 0.5
+                        animation.point1.y = connected_nodes[i].y - (screen.max_y - screen.min_y) * 0.5
+                    }else{
+                        // move to the original node
+                        animation.point1.x = active_node_element.x - (screen.max_x - screen.min_x) * 0.5
+                        animation.point1.y = active_node_element.y - (screen.max_y - screen.min_y) * 0.5
+                    }
+                    //i = connected_nodes.length;
+                    min_dist = Math.min(min_dist, dist)
+                }
+            }
+        }
+
+    }
+
+    function pointInRect(px,py,x_min,y_min, x_max, y_max){
+
+        if (x_min > x_max){
+            var x_maxx = x_max
+            x_max = x_min
+            x_min = x_maxx
+        }
+
+        if (y_min > y_max){
+            var y_maxx = y_max
+            y_max = y_min
+            y_min = y_maxx
+        }
+        return x_min < px && px < x_max && y_min < py && py < y_max
+    }
+
+    function updateAnimation(){
+        
+        var delta = 1/100;
+        animation.progress = animation.progress + delta
+
+
+        var anim_x = animation.point0.x + animation.progress * (animation.point1.x - animation.point0.x)
+        var anim_y = animation.point0.y + animation.progress * (animation.point1.y - animation.point0.y)
+
+        var new_pos = [anim_x * transform.k, anim_y * transform.k]
+
+        transform.x = -new_pos[0] 
+        transform.y = -new_pos[1] 
+
+
+    }
+
 
 }
 
