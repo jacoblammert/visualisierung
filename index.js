@@ -33,9 +33,29 @@ var max_connections = 0
 
 function findpairs(kanji,vocab){
 
+
+    for (let i = 0; i < vocab.length; ++i){
+        if (vocab[i].kanji == null){
+            vocab.splice(i, 1);
+            i--;
+        }else {
+            vocab[i].level = 0
+        }
+    }
+
+
     for (let i = 0; i < vocab.length; ++i){
         vocab[i].meaning = vocab[i].meaning.split(";")
-    } 
+        
+        let word = vocab[i].kanji.split("")
+        
+        for (let j = 0; j < kanji.length; ++j){
+            if (word.includes(kanji[j].kanji)){
+                vocab[i].level = Math.max(vocab[i].level, kanji[j].level)
+            }
+        }
+    }
+
 
     var all_kanji = []
     var all_hiragana = []
@@ -139,6 +159,8 @@ function drawNetwork(data,vocab){
 
     // https://observablehq.com/@grantcuster/using-three-js-for-2d-data-visualization - maybe zoom + lables
 
+    var level_to_display = 0; // kanji level which should be displayed
+
     var svg_width = 1500;
     var svg_height = 1000;
 
@@ -204,6 +226,13 @@ function drawNetwork(data,vocab){
         }
       }
       var interval = setInterval(test, 10);
+
+
+    document.form2.onchange = function(){
+        level_to_display = document.form2.menu.value
+        render()
+        render()
+    };
 
 
 
@@ -310,6 +339,7 @@ function drawNetwork(data,vocab){
                 }/**/
             }
             render()
+            render()
             if (!clicked_element){
                 select_Line();
             }
@@ -336,6 +366,7 @@ function drawNetwork(data,vocab){
                     dToFrontActive(active_node_element)
                 }
             }
+            render()
             render()
         }
     })
@@ -384,7 +415,7 @@ function drawNetwork(data,vocab){
 
         link.each(function(d) {
             // draws all grey lines
-            var number = drawLine(d.source.x, d.source.y, d.target.x, d.target.y, color_link,d.source.id, d.target.id, line_width);
+            var number = drawLine(d.source,d.target, color_link, line_width);
             
             if (1 == number){
                 connected_nodes.push(d.source)
@@ -395,7 +426,7 @@ function drawNetwork(data,vocab){
         // Black lines
         for (let i = 0; i < connected_nodes.length && null != active_node_element; ++i){
             // draws all black lines connected to the selected object
-            drawLine(active_node_element.x, active_node_element.y, connected_nodes[i].x, connected_nodes[i].y, color_link_connected, -1, -1, line_width_connected);
+            drawLine(active_node_element, connected_nodes[i], color_link_connected, -1, -1, line_width_connected);
         }
 
         active_node_id_old = active_node_id
@@ -407,9 +438,11 @@ function drawNetwork(data,vocab){
 
         node.each(function(d){
             //console.log(d.connections)
-            if (drawPointHere(d.x,d.y, circle_radius)){
-                var color_range = color_in_range(d)
-                drawPoint(d.x, d.y, color_range, circle_radius)
+            if (shouldDraw(d)){
+                if (drawPointHere(d.x,d.y, circle_radius)){
+                    var color_range = color_in_range(d)
+                    drawPoint(d.x, d.y, color_range, circle_radius)
+                }
             }
 
         });
@@ -430,13 +463,13 @@ function drawNetwork(data,vocab){
 
 
 
-    function drawLine(x1, y1, x2, y2,color, id0, id1, line_width){
+    function drawLine(d0, d1,color, line_width){
         
 
-        if (id0 == active_node_id || id1 == active_node_id){
+        if (d0.id == active_node_id || d1.id == active_node_id){
             
             if (active_node_id != active_node_id_old){
-                if (id0 == active_node_id){
+                if (d0.id == active_node_id){
                     return 0
                 }else{
                     return 1
@@ -444,15 +477,20 @@ function drawNetwork(data,vocab){
             }
         }
         
-        if (drawLineHere(x1,y1,x2,y2,)){
+
+        if (!(shouldDraw(d0) && shouldDraw(d1))){
+            return
+        }
+
+        if (drawLineHere(d0.x,d0.y,d1.x,d1.y,)){
 
             ctx.globalAlpha = 0.2;
 
             ctx.beginPath();
             ctx.strokeStyle = color;
             ctx.lineWidth = line_width
-            ctx.moveTo(x1, y1);    
-            ctx.lineTo(x2, y2);
+            ctx.moveTo(d0.x, d0.y);    
+            ctx.lineTo(d1.x, d1.y);
             ctx.stroke();
             ctx.globalAlpha = 1;
             drawn_lines++;
@@ -471,7 +509,9 @@ function drawNetwork(data,vocab){
             }else{
                 color = color_connected
             }
-            drawPoint(connected_nodes[i].x,connected_nodes[i].y,color, circle_radius)
+            if (shouldDraw(connected_nodes[i])){
+                drawPoint(connected_nodes[i].x,connected_nodes[i].y,color, circle_radius)
+            }
         }
         //console.log(view_mode)
         if (view_mode != 0){
@@ -484,8 +524,9 @@ function drawNetwork(data,vocab){
                     color = color_connected
                 }
 
-                drawText(connected_nodes[i].x,connected_nodes[i].y,connected_nodes[i], color, false)
-        
+                if (shouldDraw(connected_nodes[i])){
+                    drawText(connected_nodes[i].x,connected_nodes[i].y,connected_nodes[i], color, false)
+                }
             }/**/
 
             // change order of text drawing if an object has been selected
@@ -508,8 +549,11 @@ function drawNetwork(data,vocab){
                     }else{
                         color = color_connected
                     }
-                    drawPoint(active_connected_nodes[i].x,active_connected_nodes[i].y,color, circle_radius)
-                    drawText(active_connected_nodes[i].x,active_connected_nodes[i].y,active_connected_nodes[i], color, true)
+                    
+                    if (shouldDraw(active_connected_nodes[i])){
+                        drawPoint(active_connected_nodes[i].x,active_connected_nodes[i].y,color, circle_radius)
+                        drawText(active_connected_nodes[i].x,active_connected_nodes[i].y,active_connected_nodes[i], color, true)
+                    }
                 }
             }
         }
@@ -710,8 +754,8 @@ function drawNetwork(data,vocab){
 
         for (let i = 0; i < connected_nodes.length && null != active_node_element; ++i){
             if (connected_nodes[i] != active_node_element){
+                
                 var dist = distance_point_line(mouse.gx, mouse.gy, active_node_element.x, active_node_element.y, connected_nodes[i].x, connected_nodes[i].y)
-
                 var inside_rect = pointInRect(mouse.gx, mouse.gy, active_node_element.x, active_node_element.y, connected_nodes[i].x, connected_nodes[i].y)
 
                 if (dist < line_width_connected * 0.5 && dist < min_dist && inside_rect){
@@ -776,6 +820,10 @@ function drawNetwork(data,vocab){
 
     }
 
+
+    function shouldDraw(d){
+        return level_to_display == 0 || vocab[d.id].level == level_to_display
+    }
 
 }
 
