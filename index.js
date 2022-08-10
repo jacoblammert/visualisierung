@@ -30,6 +30,7 @@ Papa.parse(path_kanji,{
 });
 
 var max_connections = 0
+var average_connections = 0
 
 function findpairs(kanji,vocab){
 
@@ -86,6 +87,9 @@ function findpairs(kanji,vocab){
     var list_nodes = [];
     var list_links = [];
 
+    var total_connections = 0
+    var total_connections_nr = 0
+
     for (let i = 0; i < vocab.length; i++) {
         var linked_vocab = []
         //console.log("i:");
@@ -129,6 +133,8 @@ function findpairs(kanji,vocab){
                 }
             }
             vocab[i].connections = connected_nodes
+            total_connections_nr++
+            total_connections += connected_nodes
             max_connections = Math.max(connected_nodes, max_connections)
         }
 
@@ -143,9 +149,15 @@ function findpairs(kanji,vocab){
       data.nodes = list_nodes;
       data.links = list_links;
       
+      average_connections = total_connections/total_connections_nr
 
-      console.log("max connections")
-      console.log(max_connections)
+      for (let i = 0; i < vocab.length; ++i){
+        vocab[i].colorline = vocab[i].connections / max_connections;
+        vocab[i].draw = 0 // level to draw, if selected, draw the info as well
+      }
+
+
+
     drawNetwork(data,vocab);
 }
 
@@ -171,15 +183,36 @@ function drawNetwork(data,vocab){
 
     var color_node = "#59b3a2";
     
-    var color_link = "#aaa";
+
+    var color_red = "#FF0000";
+    var color_yellow = "#FFFF00";
+    var color_green = "#00FF00";
+    var color_blue = "#0000FF";
+
+    var color_black = "#000000";
+    var color_white = "#FFFFFF";
+
+
+    var color_grey = "#aaa";
     var line_width = circle_radius * 0.25
-    var color_link_connected = "black";
     var line_width_connected = circle_radius * 0.4
     
     var color_text_background = "grey";
     var color_text = "black";
     var color_active = "red";
     var color_connected = "orange";
+
+
+    
+    var color_1 = blendColors(color_blue, color_red, 0.1)//"#088546";
+    var color_2 = blendColors(color_blue, color_red, 0.4)//"#0b8c2b";
+    var color_3 = blendColors(color_blue, color_red, 0.7)//"#51a31d";
+    var color_4 = blendColors(color_blue, color_red, 0.9)//"#a1a608";
+
+    var color_1 = blendColors(color_1, color_black, 0.4)
+    var color_2 = blendColors(color_2, color_black, 0.3)
+    var color_3 = blendColors(color_3, color_black, 0.2)
+    var color_4 = blendColors(color_4, color_black, 0.1)
 
     var clicked_element = false // if a circle has been clicked or not
 
@@ -189,13 +222,19 @@ function drawNetwork(data,vocab){
     mouse.gx = 0 // mouse x in graph space
     mouse.gy = 0 // mouse y in graph space
 
-    var view_mode_old = 0;
-    var view_mode = 0;
+    //var view_mode_old = 0;
+    //var view_mode = 0;
 
     var active_node_id = -1 // id of the active node
     var active_node_element // active node
     var active_node_id_old = -2 // id of the active node
     var connected_nodes = [] // array with connected nodes
+
+    var searchterm = ""
+    var searchfilter = 0
+    var searchresults = 0
+    var visibleconnections = 0 // number of visible connections of the nodes
+
 
     var screen = Object()
 
@@ -220,18 +259,21 @@ function drawNetwork(data,vocab){
 
     
     function test() {
+        searchterm = document.getElementById("search").value;
+        searchfilter = document.getElementById("searchfilter").value;
+
         if (0 <= animation.progress && animation.progress < 1){
             updateAnimation()
-            render()
         }
+        render()
       }
       var interval = setInterval(test, 10);
 
 
     document.form2.onchange = function(){
         level_to_display = document.form2.menu.value
-        render()
-        render()
+        //render()
+        //render()
     };
 
 
@@ -329,7 +371,10 @@ function drawNetwork(data,vocab){
                     findActive(d)
                 
                     if (d.id == active_node_id){
-                        connected_nodes.push(d)
+                        if (!connected_nodes.includes(d)){
+                            connected_nodes.push(d)
+                        }
+                        
                         active_node_element = d;
                     }
                 });/**/
@@ -338,8 +383,8 @@ function drawNetwork(data,vocab){
                     active_connected_nodes.push(active_node_element)
                 }/**/
             }
-            render()
-            render()
+            //render()
+            //render()
             if (!clicked_element){
                 select_Line();
             }
@@ -366,15 +411,17 @@ function drawNetwork(data,vocab){
                     dToFrontActive(active_node_element)
                 }
             }
-            render()
-            render()
+            //render()
+            //render()
         }
     })
 
 
     d3.select(ctx.canvas)
     .call(d3.zoom().scaleExtent([0.05, 40])
-    .on("zoom", () => render())).on("dblclick.zoom", null);
+    //.on("zoom", () => render())
+    )
+    .on("dblclick.zoom", null);
 
 
         
@@ -407,7 +454,7 @@ function drawNetwork(data,vocab){
         screen.max_y = ((svg_height - transform.y) / transform.k); // screen max y in point space
 
 
-
+        udpateConnectedNodes()
 
 
 
@@ -415,18 +462,16 @@ function drawNetwork(data,vocab){
 
         link.each(function(d) {
             // draws all grey lines
-            var number = drawLine(d.source,d.target, color_link, line_width);
-            
-            if (1 == number){
-                connected_nodes.push(d.source)
-            }else if (0 == number){
-                connected_nodes.push(d.target)
-            }
+            drawLine(d.source,d.target, 0, line_width);
         });
-        // Black lines
+
+        visibleconnections = 0
+        // highlighted lines
         for (let i = 0; i < connected_nodes.length && null != active_node_element; ++i){
             // draws all black lines connected to the selected object
-            drawLine(active_node_element, connected_nodes[i], color_link_connected, -1, -1, line_width_connected);
+            if (connected_nodes[i] != active_node_element){
+                drawLine(active_node_element, connected_nodes[i], 1, line_width_connected);
+            }
         }
 
         active_node_id_old = active_node_id
@@ -435,17 +480,21 @@ function drawNetwork(data,vocab){
 
 
 
-
+        searchresults = 0
         node.each(function(d){
             //console.log(d.connections)
             if (shouldDraw(d)){
                 if (drawPointHere(d.x,d.y, circle_radius)){
                     var color_range = color_in_range(d)
-                    drawPoint(d.x, d.y, color_range, circle_radius)
+                    drawPoint(d, color_range, circle_radius)
                 }
+                searchresults++
             }
-
         });
+        document.getElementById("searchresults").innerHTML = "Results: " + searchresults
+        document.getElementById("connections").innerHTML = "Total Connections: " + (connected_nodes.length - 1)
+        document.getElementById("visibleconnections").innerHTML = "Visible Connections: " + visibleconnections
+
 
         if (null != active_node_element){
             drawActivePoints()
@@ -460,31 +509,41 @@ function drawNetwork(data,vocab){
         ctx.restore();
     }
 
-
-
-
-    function drawLine(d0, d1,color, line_width){
+    function udpateConnectedNodes(){
         
+        link.each(function(d){
 
-        if (d0.id == active_node_id || d1.id == active_node_id){
+            if (d.source.id == active_node_id || d.target.id == active_node_id){
             
-            if (active_node_id != active_node_id_old){
-                if (d0.id == active_node_id){
-                    return 0
-                }else{
-                    return 1
+                if (active_node_id != active_node_id_old){
+                    
+                    if (d.source.id == active_node_id){
+                        if (!connected_nodes.includes(d.target)){
+                            connected_nodes.push(d.target)
+                        }
+                    }else{
+                        if (!connected_nodes.includes(d.source)){
+                            connected_nodes.push(d.source)
+                        }
+                    }
                 }
             }
-        }
-        
+        })
+    }
+
+
+    function drawLine(d0, d1,highlighted, line_width){
 
         if (!(shouldDraw(d0) && shouldDraw(d1))){
             return
         }
+        visibleconnections++;
 
         if (drawLineHere(d0.x,d0.y,d1.x,d1.y,)){
 
-            ctx.globalAlpha = 0.2;
+
+            var color = getLineColor(d0,d1,highlighted)
+
 
             ctx.beginPath();
             ctx.strokeStyle = color;
@@ -501,7 +560,14 @@ function drawNetwork(data,vocab){
 
     function drawActivePoints(){
         
-        // nodes
+
+        // for the animation draw a circle around the point to jump to
+
+        if (null != animation.d && shouldDraw(animation.d)){
+            drawPoint(animation.d, color_yellow, circle_radius * 1.15)
+        }
+
+        // draws all points in their color
         var color = color_connected
         for (let i = 0; i < connected_nodes.length; ++i){
             if (connected_nodes[i] == active_node_element){
@@ -510,62 +576,70 @@ function drawNetwork(data,vocab){
                 color = color_connected
             }
             if (shouldDraw(connected_nodes[i])){
-                drawPoint(connected_nodes[i].x,connected_nodes[i].y,color, circle_radius)
+                drawPoint(connected_nodes[i],color, circle_radius)
             }
         }
-        //console.log(view_mode)
-        if (view_mode != 0){
-            /**/
-            for (let i = 0; i < connected_nodes.length; ++i){
+        
 
-                if (connected_nodes[i] == active_node_element){
+
+        
+
+
+        // Only the kanji
+        for (let i = 0; i < connected_nodes.length; ++i){
+
+            if (connected_nodes[i] == active_node_element){
+                color = color_active
+            }else{
+                color = color_connected
+            }
+
+            if (shouldDraw(connected_nodes[i])){
+                drawTitle(connected_nodes[i].x,connected_nodes[i].y,connected_nodes[i], color)
+            }
+        }/**/
+
+
+        // change order of text drawing if an object has been selected
+        for (let i = active_connected_nodes.length-1; 0 <= i; --i){
+            var rect = calculateTextRect(active_connected_nodes[i].x,active_connected_nodes[i].y,active_connected_nodes[i])
+            if (mouseInRect(rect[0],rect[1],rect[2], rect[3])){
+                dToFrontActive(active_connected_nodes[i])
+                i = -1
+            }
+        }
+
+
+        // Draw text seperatly in the correct order
+        for (let i = 0; i < active_connected_nodes.length; ++i){
+
+            if (shouldDraw(active_connected_nodes[i]) && connected_nodes.includes(active_connected_nodes[i])){
+                if (active_connected_nodes[i] == active_node_element){
                     color = color_active
                 }else{
                     color = color_connected
                 }
-
-                if (shouldDraw(connected_nodes[i])){
-                    drawText(connected_nodes[i].x,connected_nodes[i].y,connected_nodes[i], color, false)
-                }
-            }/**/
-
-            // change order of text drawing if an object has been selected
-
-            for (let i = active_connected_nodes.length-1; 0 <= i; --i){
-                var rect = calculateTextRect(active_connected_nodes[i].x,active_connected_nodes[i].y,active_connected_nodes[i])
-                if (mouseInRect(rect[0],rect[1],rect[2], rect[3])){
-                    dToFrontActive(active_connected_nodes[i])
-                    i = -1
-                }
-            }
-
-
-            // Draw text seperatly in the correct order
-            for (let i = 0; i < active_connected_nodes.length; ++i){
-
-                if (connected_nodes.includes(active_connected_nodes[i])){
-                    if (active_connected_nodes[i] == active_node_element){
-                        color = color_active
-                    }else{
-                        color = color_connected
-                    }
-                    
-                    if (shouldDraw(active_connected_nodes[i])){
-                        drawPoint(active_connected_nodes[i].x,active_connected_nodes[i].y,color, circle_radius)
-                        drawText(active_connected_nodes[i].x,active_connected_nodes[i].y,active_connected_nodes[i], color, true)
-                    }
+                
+                
+                if (vocab[active_connected_nodes[i].id].draw == 1){
+                    drawPoint(active_connected_nodes[i],color,circle_radius)
+                    drawTextRect(active_connected_nodes[i], color)
+                    drawText(active_connected_nodes[i], color)
                 }
             }
         }
+        
         
             
     }
 
 
-    function drawPoint(x,y,color,radius){
+    function drawPoint(d,color,radius){
         
+        color = getPointColor(d, color)
+
         ctx.beginPath();/**/
-        ctx.arc(x, y, radius, 0, Math.PI*2, false);
+        ctx.arc(d.x, d.y, radius, 0, Math.PI*2, false);
         /*/        
         ctx.rect(x - circle_radius,y - circle_radius,2*circle_radius,2*circle_radius);
         /**/
@@ -581,9 +655,15 @@ function drawNetwork(data,vocab){
         // checks if a not yet connected node has been selected 
         
 
+        if (!shouldDraw(d)){
+            return
+        }
+
         if (distace_point_point(d.x ,d.y, mouse.gx, mouse.gy) <= circle_radius){
             
             clicked_element = true;
+
+            vocab[d.id].draw = (vocab[d.id].draw + 1) % 2
 
             if (connected_nodes.includes(d) && !active_connected_nodes.includes(d) /*&& active_node_element != d*/){
                 // New element added to selection
@@ -596,11 +676,6 @@ function drawNetwork(data,vocab){
             }
 
             active_node_id = d.id
-            if (active_node_id == active_node_id_old){
-                view_mode = (view_mode + 1) % 3;
-            }else {
-                //view_mode = 0;
-            }
         }
     }
 
@@ -612,30 +687,10 @@ function drawNetwork(data,vocab){
     }
     
 
-
-
-    function drawText(x,y,d, color, active){
+    function drawTitle(x,y,d, color){
     
         var text = vocab[d.id].kanji 
         var text_width = (text.length + 0.5) * circle_radius;
-
-        var draw_text = active && view_mode == 2
-
-
-        // Red background text
-        if (draw_text){
-
-            var rect = calculateTextRect(x,y,d)
-
-
-            if (!mouseInRect(rect[0],rect[1],rect[2], rect[3])){
-                ctx.globalAlpha = 0.5 + 0.5 * (active_connected_nodes.indexOf(d) + 1) / active_connected_nodes.length;
-            }
-            ctx.fillStyle = color;
-            ctx.fillRect(rect[0],rect[1],rect[2] - rect[0], rect[3] - rect[1]);
-            ctx.globalAlpha = 1;
-        }
-
 
         ctx.font = circle_radius * 2 + 'px'
         x += circle_radius * 0.0
@@ -644,17 +699,48 @@ function drawNetwork(data,vocab){
         ctx.fillRect(x, y - circle_radius, text_width, 2 * circle_radius);
         ctx.fillStyle = color_text;
         ctx.fillText(text,x,y)
+    }
 
-        // hiragana + meaning
-        if (draw_text){
-            
-            text = vocab[d.id].hiragana 
-            ctx.fillText(text,x,y + 2 * circle_radius)
-            for (let i = 0; i < vocab[d.id].meaning.length; ++i){
-                text = vocab[d.id].meaning[i]
-                ctx.fillText(text,x,y + 2 * circle_radius * (2 + i))
-            }
+
+    function drawTextRect(d, color){
+        
+
+        var rect = calculateTextRect(d.x,d.y,d)
+        
+        if (!mouseInRect(rect[0],rect[1],rect[2], rect[3])){
+            ctx.globalAlpha = 0.5 + 0.5 * (active_connected_nodes.indexOf(d) + 1) / active_connected_nodes.length;
         }
+        ctx.fillStyle = color;
+        ctx.fillRect(rect[0],rect[1],rect[2] - rect[0], rect[3] - rect[1]);
+        ctx.globalAlpha = 1;
+    }
+
+    function drawText(d, color){
+    
+
+
+        var text = vocab[d.id].kanji 
+        var text_width = (text.length + 0.5) * circle_radius;
+
+        ctx.font = circle_radius * 2 + 'px'
+        var x = d.x + circle_radius * 0.0
+        var y = d.y
+
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y - circle_radius, text_width, 2 * circle_radius);
+        ctx.fillStyle = color_text;
+        ctx.fillText(text,x,y)
+
+
+        // hiragana
+        text = vocab[d.id].hiragana 
+        ctx.fillText(text,x,y + 2 * circle_radius)
+        // meaning
+        for (let i = 0; i < vocab[d.id].meaning.length; ++i){
+            text = vocab[d.id].meaning[i]
+            ctx.fillText(text,x,y + 2 * circle_radius * (2 + i))
+        }
+            
     }
 
 
@@ -751,9 +837,15 @@ function drawNetwork(data,vocab){
         // if a black line has been selected, the camera moves to the point which is furthest and adds it to the active nodes
 
         var min_dist = 999999999999999999999;
+        var center_x = 0.3
+        var center_y = 0.3
 
-        for (let i = 0; i < connected_nodes.length && null != active_node_element; ++i){
-            if (connected_nodes[i] != active_node_element){
+
+
+        for (let i = 0; i < connected_nodes.length && null != active_node_element && shouldDraw(active_node_element); ++i){
+
+
+            if (connected_nodes[i] != active_node_element && shouldDraw(connected_nodes[i])){
                 
                 var dist = distance_point_line(mouse.gx, mouse.gy, active_node_element.x, active_node_element.y, connected_nodes[i].x, connected_nodes[i].y)
                 var inside_rect = pointInRect(mouse.gx, mouse.gy, active_node_element.x, active_node_element.y, connected_nodes[i].x, connected_nodes[i].y)
@@ -764,6 +856,7 @@ function drawNetwork(data,vocab){
                     var dist_active = distace_point_point(mouse.gx, mouse.gy, active_node_element.x, active_node_element.y)
 
                     animation.progress = 0 // new Animation starts 
+                    animation.k = transform.k
 
                     animation.point0.x = -transform.x / transform.k
                     animation.point0.y = -transform.y / transform.k
@@ -772,12 +865,14 @@ function drawNetwork(data,vocab){
 
                     if (dist_connected > dist_active){
                         // move to the connected node
-                        animation.point1.x = connected_nodes[i].x - (screen.max_x - screen.min_x) * 0.5
-                        animation.point1.y = connected_nodes[i].y - (screen.max_y - screen.min_y) * 0.5
+                        animation.point1.x = connected_nodes[i].x - (screen.max_x - screen.min_x) * center_x
+                        animation.point1.y = connected_nodes[i].y - (screen.max_y - screen.min_y) * center_y
+                        animation.d = connected_nodes[i]
                     }else{
                         // move to the original node
-                        animation.point1.x = active_node_element.x - (screen.max_x - screen.min_x) * 0.5
-                        animation.point1.y = active_node_element.y - (screen.max_y - screen.min_y) * 0.5
+                        animation.point1.x = active_node_element.x - (screen.max_x - screen.min_x) * center_x
+                        animation.point1.y = active_node_element.y - (screen.max_y - screen.min_y) * center_y
+                        animation.d = active_node_element
                     }
                     //i = connected_nodes.length;
                     min_dist = Math.min(min_dist, dist)
@@ -812,17 +907,92 @@ function drawNetwork(data,vocab){
         var anim_x = animation.point0.x + animation.progress * (animation.point1.x - animation.point0.x)
         var anim_y = animation.point0.y + animation.progress * (animation.point1.y - animation.point0.y)
 
-        var new_pos = [anim_x * transform.k, anim_y * transform.k]
+        var new_pos = [anim_x * animation.k, anim_y * animation.k]
 
         transform.x = -new_pos[0] 
         transform.y = -new_pos[1] 
 
-
     }
 
+    function getPointColor(d, color){
+
+        if (connected_nodes.includes(d)){
+            return color;
+        }
+
+        if (vocab[d.id].level == 1){
+            return color_1
+        } else if (vocab[d.id].level == 2){
+            return color_2
+        } else if (vocab[d.id].level == 3){
+            return color_3
+        } else  if (vocab[d.id].level == 4){
+            return color_4
+        }
+    }
+
+    function getLineColor(d0, d1,highlighted){
+
+
+        //return blendColors(color_red, color_text, vocab[d0.id].colorline + vocab[d1.id].colorline)
+/**/
+        var value = (vocab[d0.id].colorline + vocab[d1.id].colorline)
+        
+        if (value < 0){
+            value = 0
+        }else if (1 < value){
+            value = 1
+        }
+
+        if (highlighted == 0){
+            // not highlighted
+            ctx.globalAlpha = 0.1;
+            return blendColors(color_blue, color_red, value)
+        }else if (highlighted == 1){
+            // highlighted
+            ctx.globalAlpha = 1;
+            return blendColors(color_blue, color_red, value)
+            return color_black //blendColors(color_red, color_black, value)
+        }
+        /**/
+    }
 
     function shouldDraw(d){
-        return level_to_display == 0 || vocab[d.id].level == level_to_display
+
+        var search_kanji = vocab[d.id].kanji.includes(searchterm)
+        var search_romaji = vocab[d.id].romaji.includes(searchterm)
+        var search_hiragana = vocab[d.id].hiragana.includes(searchterm)
+        var search_meaning = false
+
+        for (let i = 0; i < vocab[d.id].meaning.length; ++i){
+            search_meaning = search_meaning || vocab[d.id].meaning[i].includes(searchterm)
+        }
+
+        search_kanji = search_kanji && (searchfilter == 0 || searchfilter == 1)
+        search_hiragana = search_hiragana && (searchfilter == 0 || searchfilter == 2)
+        search_romaji = search_romaji && (searchfilter == 0 || searchfilter == 2)
+        search_meaning = search_meaning && (searchfilter == 0 || searchfilter == 3)
+
+
+        var search = search_meaning || search_kanji || search_romaji || search_hiragana
+
+
+
+        return (level_to_display == 0 || vocab[d.id].level == level_to_display) && search
+    }
+
+    // https://stackoverflow.com/questions/6367010/average-2-hex-colors-together-in-javascript
+// blend two hex colors together by an amount
+    function blendColors(colorA, colorB, amount) {
+        //console.log(colorA)
+        //console.log(amount)
+        const [rA, gA, bA] = colorA.match(/\w\w/g).map((c) => parseInt(c, 16));
+        const [rB, gB, bB] = colorB.match(/\w\w/g).map((c) => parseInt(c, 16));
+        const r = Math.round(rA + (rB - rA) * amount).toString(16).padStart(2, '0');
+        const g = Math.round(gA + (gB - gA) * amount).toString(16).padStart(2, '0');
+        const b = Math.round(bA + (bB - bA) * amount).toString(16).padStart(2, '0');
+        //console.log("r " +r + " g " + g + " b " + b)
+        return '#' + r + g + b;
     }
 
 }

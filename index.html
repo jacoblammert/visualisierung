@@ -16,20 +16,40 @@
 <body>
     <main>
         <h1>Visualization Project</h1>
+            
+            
 
+        <div>
+            <form class="form3" onsubmit="return false">
+                <input id="search" type="text" class="input" placeholder="search..." />
+            </form>
+        </div>
+        <div>
             <form name="form2">
                 <select name="menu">
-                    <option value=0>All</option>
+                    <option value=0>All Level</option>
                     <option value=1>Level 1</option>
                     <option value=2>Level 2</option>
                     <option value=3>Level 3</option>
                     <option value=4>Level 4</option>
                 </select>
+                
             </form>
+            <form name="form4">
+                <select id = "searchfilter" name="SearchFilter">
+                    <option value=0>All Search Filters</option>
+                    <option value=1>Kanji</option>
+                    <option value=2>Hiragana</option>
+                    <option value=3>Meaning</option>
+                </select>
+                
+            </form>
+            <p style="font-size:medium" id = "searchresults"></p>
+            <p style="font-size:medium" id = "connections"></p>
+            <p style="font-size:medium" id = "visibleconnections"></p>
+        </div>
+
         <div id="network"></div>
-
-
-
 
     </main>
     
