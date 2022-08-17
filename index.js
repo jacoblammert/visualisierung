@@ -231,6 +231,7 @@ function drawNetwork(data,vocab){
     var connected_nodes = [] // array with connected nodes
 
     var searchterm = ""
+    var termfilter = []
     var searchfilter = 0
     var searchresults = 0
     var visibleconnections = 0 // number of visible connections of the nodes
@@ -374,7 +375,7 @@ function drawNetwork(data,vocab){
                         if (!connected_nodes.includes(d)){
                             connected_nodes.push(d)
                         }
-                        
+                        addKanjiFilter(vocab[d.id].kanji)
                         active_node_element = d;
                     }
                 });/**/
@@ -400,6 +401,7 @@ function drawNetwork(data,vocab){
                     if (!connected_nodes.includes(d)){
                         connected_nodes.push(d)
                     }
+                    addKanjiFilter(vocab[d.id].kanji)
                     active_node_element = d;
                 }
             });/**/
@@ -965,7 +967,7 @@ function drawNetwork(data,vocab){
         var search_meaning = false
 
         for (let i = 0; i < vocab[d.id].meaning.length; ++i){
-            search_meaning = search_meaning || vocab[d.id].meaning[i].includes(searchterm)
+            search_meaning = search_meaning || vocab[d.id].meaning[i].includes(searchterm) 
         }
 
         search_kanji = search_kanji && (searchfilter == 0 || searchfilter == 1)
@@ -974,7 +976,9 @@ function drawNetwork(data,vocab){
         search_meaning = search_meaning && (searchfilter == 0 || searchfilter == 3)
 
 
-        var search = search_meaning || search_kanji || search_romaji || search_hiragana
+        var filterterm = FilterTerm(vocab[d.id].kanji);
+
+        var search = (search_meaning || search_kanji || search_romaji || search_hiragana) && filterterm
 
 
 
@@ -993,6 +997,65 @@ function drawNetwork(data,vocab){
         const b = Math.round(bA + (bB - bA) * amount).toString(16).padStart(2, '0');
         //console.log("r " +r + " g " + g + " b " + b)
         return '#' + r + g + b;
+    }
+
+
+    // Adds a Button for a kanji
+    function addKanjiFilter(kanji) {
+        const body = document.getElementById('kanjifilter');
+        // remove all child nodes
+        if (body.innerHTML != null){
+            body.innerHTML = '';
+        }
+
+        let split_kanji = kanji.split("");
+
+        //var buttons = []
+
+        for (let i = 0; i < split_kanji.length; ++i){
+
+            var element = document.createElement("input");
+            element.setAttribute("type", "button");
+            element.setAttribute("value", split_kanji[i]);
+            element.setAttribute("class", split_kanji[i]);
+            element.setAttribute("id", "button" + i);
+            element.onclick = function () {
+                this.style.background = color_grey;
+
+                if (termfilter.includes(split_kanji[i])){
+                        termfilter.splice(termfilter.indexOf(split_kanji[i]),1)
+                        this.style.background = color_grey;
+                }else{
+                        termfilter.push(split_kanji[i])
+                        this.style.background = color_white;
+                }
+
+                
+
+                //console.log(termfilter)
+            };
+            body.appendChild(element);
+        }
+    }
+
+    function FilterTerm(d){
+        if (termfilter.length == 0){
+            return true
+        }
+        for (let i = 0; i < termfilter.length; ++i){
+            if (d.includes(termfilter[i])){
+                return true;
+            }
+        }
+        return false
+    }
+
+
+
+    function removeElement(d, element){
+        if (d.includes(element)){
+            d.splice(d.indexOf(element),1)
+        }
     }
 
 }
