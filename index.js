@@ -171,7 +171,16 @@ function drawNetwork(data,vocab){
 
     // https://observablehq.com/@grantcuster/using-three-js-for-2d-data-visualization - maybe zoom + lables
 
-    var level_to_display = 0; // kanji level which should be displayed
+    var display_level_all = true; // kanji level which should be displayed
+    var display_level_1 = false; // kanji level which should be displayed
+    var display_level_2 = false; // kanji level which should be displayed
+    var display_level_3 = false; // kanji level which should be displayed
+    var display_level_4 = false; // kanji level which should be displayed
+    document.getElementById("level0").style.backgroundColor = "green";
+    document.getElementById("level1").style.backgroundColor = "red";
+    document.getElementById("level2").style.backgroundColor = "red";
+    document.getElementById("level3").style.backgroundColor = "red";
+    document.getElementById("level4").style.backgroundColor = "red";
 
     var svg_width = 1500;
     var svg_height = 1000;
@@ -271,11 +280,62 @@ function drawNetwork(data,vocab){
       var interval = setInterval(test, 10);
 
 
-    document.form2.onchange = function(){
-        level_to_display = document.form2.menu.value
-        //render()
-        //render()
-    };
+      
+      document.getElementById("level0").onclick = function(){
+        display_level_all = !display_level_all;
+        document.getElementById("level0").style.backgroundColor = "red";
+        if (display_level_all){
+            document.getElementById("level0").style.backgroundColor = "green";
+            return
+        }
+
+
+        document.getElementById("level1").style.backgroundColor = "red";
+        document.getElementById("level2").style.backgroundColor = "red";
+        document.getElementById("level3").style.backgroundColor = "red";
+        document.getElementById("level4").style.backgroundColor = "red";
+
+        display_level_1 = display_level_all
+        display_level_2 = display_level_all
+        display_level_3 = display_level_all
+        display_level_4 = display_level_all
+      };
+      document.getElementById("level1").onclick = function(){
+        display_level_1 = !display_level_1;
+
+        document.getElementById("level1").style.backgroundColor = "red";
+        if (display_level_1){
+            document.getElementById("level1").style.backgroundColor = "green";
+            return
+        }
+      };
+      document.getElementById("level2").onclick = function(){
+        display_level_2 = !display_level_2;
+        
+        document.getElementById("level2").style.backgroundColor = "red";
+        if (display_level_2){
+            document.getElementById("level2").style.backgroundColor = "green";
+            return
+        }
+      };
+      document.getElementById("level3").onclick = function(){
+        display_level_3 = !display_level_3;
+        
+        document.getElementById("level3").style.backgroundColor = "red";
+        if (display_level_3){
+            document.getElementById("level3").style.backgroundColor = "green";
+            return
+        }
+      };
+      document.getElementById("level4").onclick = function(){
+        display_level_4 = !display_level_4;
+        
+        document.getElementById("level4").style.backgroundColor = "red";
+        if (display_level_4){
+            document.getElementById("level4").style.backgroundColor = "green";
+            return
+        }
+      };
 
 
 
@@ -375,11 +435,12 @@ function drawNetwork(data,vocab){
                         if (!connected_nodes.includes(d)){
                             connected_nodes.push(d)
                         }
-                        addKanjiFilter(vocab[d.id].kanji)
+                        
                         active_node_element = d;
                     }
                 });/**/
                 if (active_node_id != active_node_id_old){
+                    addKanjiFilter(vocab[active_node_id].kanji)
                     active_connected_nodes = []
                     active_connected_nodes.push(active_node_element)
                 }/**/
@@ -401,12 +462,13 @@ function drawNetwork(data,vocab){
                     if (!connected_nodes.includes(d)){
                         connected_nodes.push(d)
                     }
-                    addKanjiFilter(vocab[d.id].kanji)
+                    
                     active_node_element = d;
                 }
             });/**/
             if (active_node_id != active_node_id_old){
                 //active_connected_nodes = []
+                addKanjiFilter(vocab[active_node_id].kanji)
                 if (!active_connected_nodes.includes(active_node_element)){
                     active_connected_nodes.push(active_node_element)
                 }else {
@@ -839,8 +901,7 @@ function drawNetwork(data,vocab){
         // if a black line has been selected, the camera moves to the point which is furthest and adds it to the active nodes
 
         var min_dist = 999999999999999999999;
-        var center_x = 0.3
-        var center_y = 0.3
+        
 
 
 
@@ -860,20 +921,20 @@ function drawNetwork(data,vocab){
                     animation.progress = 0 // new Animation starts 
                     animation.k = transform.k
 
-                    animation.point0.x = -transform.x / transform.k
-                    animation.point0.y = -transform.y / transform.k
+                    animation.point0.x = -transform.x;// / transform.k
+                    animation.point0.y = -transform.y;// / transform.k
 
                     //var connected_= distace_point_point(active_node_element.x , active_node_element.y,animation.point0.x,animation.point0.y);
 
                     if (dist_connected > dist_active){
                         // move to the connected node
-                        animation.point1.x = connected_nodes[i].x - (screen.max_x - screen.min_x) * center_x
-                        animation.point1.y = connected_nodes[i].y - (screen.max_y - screen.min_y) * center_y
+                        animation.point1.x = connected_nodes[i].x 
+                        animation.point1.y = connected_nodes[i].y 
                         animation.d = connected_nodes[i]
                     }else{
                         // move to the original node
-                        animation.point1.x = active_node_element.x - (screen.max_x - screen.min_x) * center_x
-                        animation.point1.y = active_node_element.y - (screen.max_y - screen.min_y) * center_y
+                        animation.point1.x = active_node_element.x 
+                        animation.point1.y = active_node_element.y
                         animation.d = active_node_element
                     }
                     //i = connected_nodes.length;
@@ -905,11 +966,30 @@ function drawNetwork(data,vocab){
         var delta = 1/100;
         animation.progress = animation.progress + delta
 
+        // animation.progress between 0 and 1
 
-        var anim_x = animation.point0.x + animation.progress * (animation.point1.x - animation.point0.x)
-        var anim_y = animation.point0.y + animation.progress * (animation.point1.y - animation.point0.y)
+        var max_k = 2;
+        
+        var k_progress = -4 * (animation.progress - 1) * animation.progress // (0,0) (0.5,1) (1,0)  quadratic
 
-        var new_pos = [anim_x * animation.k, anim_y * animation.k]
+        var k_progress = -16 * Math.pow(animation.progress - 0.5,4) + 1
+
+        transform.k = (1-k_progress) * animation.k + k_progress * max_k
+
+
+
+
+        var center_x = 0.3
+        var center_y = 0.3
+
+        var x1 = animation.point1.x - (screen.max_x - screen.min_x) * center_x
+        var y1 = animation.point1.y - (screen.max_y - screen.min_y) * center_y
+
+        var anim_x = animation.point0.x / animation.k + animation.progress * (x1 - animation.point0.x / animation.k)
+        var anim_y = animation.point0.y / animation.k + animation.progress * (y1 - animation.point0.y / animation.k)
+
+        //var new_pos = [anim_x * animation.k, anim_y * animation.k]
+        var new_pos = [anim_x * transform.k, anim_y * transform.k]
 
         transform.x = -new_pos[0] 
         transform.y = -new_pos[1] 
@@ -982,7 +1062,15 @@ function drawNetwork(data,vocab){
 
 
 
-        return (level_to_display == 0 || vocab[d.id].level == level_to_display) && search
+        return search && (display_level_all ||
+            vocab[d.id].level == 1 && display_level_1 ||
+            vocab[d.id].level == 2 && display_level_2 ||
+            vocab[d.id].level == 3 && display_level_3 ||
+            vocab[d.id].level == 4 && display_level_4 
+
+        )
+
+        //return (level_to_display == 0 || vocab[d.id].level == level_to_display) && search
     }
 
     // https://stackoverflow.com/questions/6367010/average-2-hex-colors-together-in-javascript
@@ -1019,22 +1107,28 @@ function drawNetwork(data,vocab){
             element.setAttribute("value", split_kanji[i]);
             element.setAttribute("class", split_kanji[i]);
             element.setAttribute("id", "button" + i);
+            //element.setAttribute("font-size", 6)
+
             element.onclick = function () {
-                this.style.background = color_grey;
 
                 if (termfilter.includes(split_kanji[i])){
                         termfilter.splice(termfilter.indexOf(split_kanji[i]),1)
-                        this.style.background = color_grey;
+                        document.getElementById("button" + i).style.backgroundColor = "#CC0000";//"#66CC99";
                 }else{
                         termfilter.push(split_kanji[i])
-                        this.style.background = color_white;
+                        document.getElementById("button" + i).style.backgroundColor = "#CCFFCC";
                 }
-
-                
-
                 //console.log(termfilter)
             };
             body.appendChild(element);
+            //var br = document.createElement("br");
+            //body.appendChild(br);
+            document.getElementById("button" + i).style.backgroundColor = "#CC0000";//"#66CC99";//color_grey;
+
+            document.getElementById("button" + i).style.height = "40px";
+            document.getElementById("button" + i).style.width = "40px";
+            document.getElementById("button" + i).style.fontSize = "20px";
+
         }
     }
 
